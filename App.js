@@ -2,8 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import Main from './src/Main';
 
 export default function App() {
-  return <>
-    <StatusBar style='dark'/>
-    <Main/>
-  </>;
+  return (
+    <>
+      <StatusBar style='dark'/>
+      <Main/>
+    </>
+  );
 }
