@@ -1,9 +1,14 @@
-import { View } from "react-native";
+import { NativeBaseProvider } from "native-base";
+import { theme } from './theme/theme';
+
+import SafeAreaAppBar from "./components/SafeAreaAppBar";
+import Router from "./routes/Router";
 
 export default Main = () => {
   return (
-    <View>
-      {/*  */}
-    </View>
+    <NativeBaseProvider theme={theme}>
+      <SafeAreaAppBar/>
+      <Router/>
+    </NativeBaseProvider>
   );
 }
