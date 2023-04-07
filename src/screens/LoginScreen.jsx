@@ -10,7 +10,7 @@ import FormValidation from '../components/FormValidation';
 import FacebookLogin from '../components/login/FacebookLogin';
 import GoogleLogin from '../components/login/GoogleLogin';
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
   const [ formData, setFormData ] = useRecoilState(formDataState);
   const [ _, setErrors ] = useRecoilState(errorsState);
 
@@ -99,14 +99,14 @@ export default function LoginScreen() {
 
     <Button
       bg='amber.400' borderColor='gray.800' borderWidth={1} colorScheme='dark'
-      variant='subtle' rounded='full' px={10} py={2} shadow={2} mb={4}
+      variant='subtle' rounded='full' px={10} py={2} shadow={2} mb={6} w='75%'
       _text={{ color: 'white', fontSize: 'lg', fontWeight: 'semibold' }}
       onPress={onSubmit}
     >
       Iniciar sesión
     </Button>
     
-    <Pressable onPress={() => {}} mb={10}>
+    <Pressable onPress={() => navigation.navigate('Register')} mb={12}>
       <Text color='black' fontSize='md'>
         ¿No tienes cuenta?{' '}
         <Text color='amber.400' fontWeight='semibold'>Registrate</Text>
