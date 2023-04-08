@@ -7,7 +7,7 @@ import Router from "./routes/Router";
 export default Main = () => {
   return (
     <NativeBaseProvider theme={theme}>
-      <SafeAreaAppBar/>
+      {/* <SafeAreaAppBar/> */}
       <Router/>
     </NativeBaseProvider>
   );
