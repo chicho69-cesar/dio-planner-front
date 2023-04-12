@@ -1,4 +1,4 @@
-import { extendTheme } from "native-base";
+import { extendTheme } from 'native-base'
 
 export const theme = extendTheme({
   config: {
@@ -16,10 +16,10 @@ export const theme = extendTheme({
       600: '#0891b2',
       700: '#0e7490',
       800: '#155e75',
-      900: '#164e63',
+      900: '#164e63'
     },
     facebook: {
       100: '#3b5998'
     }
-  },
-});
+  }
+})
