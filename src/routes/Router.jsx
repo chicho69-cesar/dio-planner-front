@@ -2,12 +2,22 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
+import { HomeHeader, SearchHeader } from '../components/Headers'
+import ChatsScreen from '../screens/ChatsScreen'
+import ProfileScreen from '../screens/ProfileScreen'
 import LoginScreen from '../screens/LoginScreen'
 import RegisterScreen from '../screens/RegisterScreen'
 import HomeScreen from '../screens/HomeScreen'
 import SearchScreen from '../screens/SearchScreen'
-
-import { HomeHeader, SearchHeader } from '../components/Headers'
+import ChatScreen from '../screens/ChatScreen'
+import CreateEventScreen from '../screens/CreateEventScreen'
+import EventScreen from '../screens/EventScreen'
+import GuestsScreen from '../screens/GuestsScreen'
+import AddGuestScreen from '../screens/AddGuestScreen'
+import TodoListScreen from '../screens/TodoListScreen'
+import PurchasesAndExpensesScreen from '../screens/PurchasesAndExpensesScreen'
+import MemoriesScreen from '../screens/MemoriesScreen'
+import EventGradeScreen from '../screens/EventGradeScreen'
 
 const Stack = createStackNavigator()
 
@@ -64,6 +74,72 @@ export default function Router() {
             ),
             headerLeft: () => null
           })}
+        />
+
+        <Stack.Screen
+          name="Chats"
+          component={ChatsScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Chat"
+          component={ChatScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="CreateEvent"
+          component={CreateEventScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Event"
+          component={EventScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Guests"
+          component={GuestsScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="AddGuest"
+          component={AddGuestScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="TodoList"
+          component={TodoListScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Purchases"
+          component={PurchasesAndExpensesScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Memories"
+          component={MemoriesScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="EventGrade"
+          component={EventGradeScreen}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

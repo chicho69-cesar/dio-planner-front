@@ -32,8 +32,8 @@ export default function BottomNavigationBar({ navigation, route, active }) {
       <NavBarElement
         navigation={navigation}
         route={route}
-        to="Chat"
-        active={active === 'Chat'}
+        to="Chats"
+        active={active === 'Chats'}
         text="Chats"
         icon="chat-bubble-outline"
       />

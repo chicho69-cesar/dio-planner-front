@@ -1,6 +1,6 @@
 import React from 'react'
-import { HStack, Text, Pressable, Icon, Input, Button } from 'native-base'
-import { MaterialIcons, Ionicons } from '@expo/vector-icons'
+import { HStack, Text, Icon, Input, Button } from 'native-base'
+import { Ionicons } from '@expo/vector-icons'
 
 export function HomeHeader({ navigation, route }) {
   return (
@@ -9,15 +9,7 @@ export function HomeHeader({ navigation, route }) {
         Próximos eventos
       </Text>
 
-      <Pressable onPress={() => navigation.navigate('Search')}>
-        <Icon
-          as={<MaterialIcons name="search" />}
-          size={6}
-          mr="2"
-          color="gray.600"
-          fontWeight="bold"
-        />
-      </Pressable>
+      <HeaderLogo />
     </HStack>
   )
 }
@@ -55,5 +47,19 @@ export function SearchHeader({ navigation, route }) {
         />
       </Button>
     </HStack>
+  )
+}
+
+function HeaderLogo() {
+  return (
+    <Text
+      fontSize="2xl"
+      paddingX="2"
+      color="black"
+      fontStyle="italic"
+      fontWeight="bold"
+    >
+      D
+    </Text>
   )
 }
