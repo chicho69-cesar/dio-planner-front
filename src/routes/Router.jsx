@@ -2,7 +2,7 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import { HomeHeader, SearchHeader } from '../components/Headers'
+import { HomeHeader, ProfileHeader, SearchHeader } from '../components/Headers'
 import ChatsScreen from '../screens/ChatsScreen'
 import ProfileScreen from '../screens/ProfileScreen'
 import LoginScreen from '../screens/LoginScreen'
@@ -18,28 +18,14 @@ import TodoListScreen from '../screens/TodoListScreen'
 import PurchasesAndExpensesScreen from '../screens/PurchasesAndExpensesScreen'
 import MemoriesScreen from '../screens/MemoriesScreen'
 import EventGradeScreen from '../screens/EventGradeScreen'
+import EditInfoScreen from '../screens/EditInfoScreen'
 
 const Stack = createStackNavigator()
 
 export default function Router() {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: '#fbbf24',
-            elevation: 5,
-            borderBottomLeftRadius: 15,
-            borderBottomRightRadius: 15
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            color: '#101010'
-          }
-        }}
-      >
+      <Stack.Navigator initialRouteName="Home" screenOptions={headerStyles}>
         <Stack.Screen
           name="Login"
           component={LoginScreen}
@@ -72,7 +58,10 @@ export default function Router() {
             headerTitle: (props) => (
               <SearchHeader navigation={navigation} route={route} />
             ),
-            headerLeft: () => null
+            headerLeft: () => null,
+            headerStyle: { ...headerStyles.headerStyle, height: 90 },
+            headerTintColor: headerStyles.headerTintColor,
+            headerTitleStyle: headerStyles.headerTitleStyle
           })}
         />
 
@@ -91,7 +80,13 @@ export default function Router() {
         <Stack.Screen
           name="Profile"
           component={ProfileScreen}
-          options={{ headerShown: false }}
+          options={({ navigation, route }) => ({
+            // eslint-disable-next-line react/no-unstable-nested-components
+            headerTitle: (props) => (
+              <ProfileHeader navigation={navigation} route={route} />
+            ),
+            headerLeft: () => null
+          })}
         />
 
         <Stack.Screen
@@ -141,7 +136,27 @@ export default function Router() {
           component={EventGradeScreen}
           options={{ headerShown: false }}
         />
+
+        <Stack.Screen
+          name="EditInfo"
+          component={EditInfoScreen}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   )
+}
+
+const headerStyles = {
+  headerStyle: {
+    backgroundColor: '#fbbf24',
+    elevation: 5,
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15
+  },
+  headerTintColor: '#fff',
+  headerTitleStyle: {
+    fontWeight: 'bold',
+    color: '#101010'
+  }
 }

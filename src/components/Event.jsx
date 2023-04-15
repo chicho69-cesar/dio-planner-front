@@ -10,8 +10,12 @@ import {
 } from 'native-base'
 
 export default function Event({ navigation, route, item }) {
+  const navigateToEvent = (id) => {
+    console.log('Hola')
+  }
+
   return (
-    <Pressable key={item.id} onPress={() => console.log('Hola')}>
+    <Pressable key={item.id} onPress={() => navigateToEvent(item.id)}>
       {({ isPressed }) => {
         return (
           <Box

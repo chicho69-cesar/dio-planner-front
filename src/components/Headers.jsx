@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { HStack, Text, Icon, Input, Button } from 'native-base'
 import { Ionicons } from '@expo/vector-icons'
 
@@ -15,6 +15,16 @@ export function HomeHeader({ navigation, route }) {
 }
 
 export function SearchHeader({ navigation, route }) {
+  const [textSearch, setTextSearch] = useState('')
+
+  const handleWrite = (text) => {
+    setTextSearch(text)
+  }
+
+  const handleSearch = () => {
+    console.log(textSearch)
+  }
+
   return (
     <HStack w="100%" justifyContent="space-between" alignItems="center">
       <Input
@@ -29,7 +39,7 @@ export function SearchHeader({ navigation, route }) {
         focusOutlineColor="coolGray.800"
         bg="white"
         _focus={{ bg: 'coolGray.100' }}
-        onChangeText={(text) => {}}
+        onChangeText={handleWrite}
       />
 
       <Button
@@ -38,6 +48,7 @@ export function SearchHeader({ navigation, route }) {
         shadow={2}
         colorScheme="amber"
         bg="amber.600"
+        onPress={handleSearch}
       >
         <Icon
           as={<Ionicons name="ios-search" />}
@@ -46,6 +57,18 @@ export function SearchHeader({ navigation, route }) {
           fontWeight="bold"
         />
       </Button>
+    </HStack>
+  )
+}
+
+export function ProfileHeader({ navigation, route }) {
+  return (
+    <HStack w="100%" justifyContent="space-between" alignItems="center">
+      <Text fontSize="lg" fontWeight="bold" color="black">
+        Mi perfil publico
+      </Text>
+
+      <HeaderLogo />
     </HStack>
   )
 }

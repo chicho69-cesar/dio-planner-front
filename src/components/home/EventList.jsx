@@ -1,6 +1,6 @@
 import React from 'react'
 import { FlatList } from 'native-base'
-import Event from './Event'
+import Event from '../Event'
 
 export default function EventList({ navigation, route, events }) {
   return (

@@ -3,9 +3,13 @@ import { Column, Pressable, VStack, Image, Text } from 'native-base'
 import { StyleSheet } from 'react-native'
 
 export default function SearchResult({ navigation, route, item }) {
+  const navigateToResult = (id) => {
+    console.log('Hola')
+  }
+
   return (
     <Column w="47%" mx="1%" my={2} key={item.id}>
-      <Pressable w="100%" onPress={() => {}}>
+      <Pressable w="100%" onPress={() => navigateToResult(item.id)}>
         {({ isPressed }) => {
           return (
             <VStack

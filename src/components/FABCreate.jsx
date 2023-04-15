@@ -20,7 +20,7 @@ export function FABCreate({ navigation, route }) {
           color="black"
         />
       }
-      onPress={() => {}}
+      onPress={() => navigation.navigate('CreateEvent')}
     />
   )
 }

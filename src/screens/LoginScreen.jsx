@@ -119,7 +119,7 @@ export default function LoginScreen({ navigation }) {
           onChange={onChangeRemember}
           _text={{ color: 'black' }}
         >
-          Recuerdame
+          Recuérdeme
         </Checkbox>
       </FormElement>
 
@@ -145,7 +145,7 @@ export default function LoginScreen({ navigation }) {
         <Text color="black" fontSize="md">
           ¿No tienes cuenta?{' '}
           <Text color="amber.400" fontWeight="semibold">
-            Registrate
+            Regístrate
           </Text>
         </Text>
       </Pressable>

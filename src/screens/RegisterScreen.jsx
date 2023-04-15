@@ -178,7 +178,7 @@ export default function RegisterScreen({ navigation }) {
           onChange={onChangeTerms}
           _text={{ color: 'black' }}
         >
-          Aceptar terminos y condiciones
+          Aceptar términos y condiciones
         </Checkbox>
       </FormElement>
 
