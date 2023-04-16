@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
 import {
   Pressable,
   Box,
@@ -9,7 +10,9 @@ import {
   Text
 } from 'native-base'
 
-export default function Event({ navigation, route, item }) {
+export default function Event({ item }) {
+  const navigation = useNavigation()
+
   const navigateToEvent = (id) => {
     console.log('Hola')
   }

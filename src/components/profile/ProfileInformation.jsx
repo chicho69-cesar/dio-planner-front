@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
 import {
   AspectRatio,
   Box,
@@ -13,7 +14,9 @@ import {
 } from 'native-base'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
-export default function ProfileInformation({ navigation, route, nOfEvents }) {
+export default function ProfileInformation({ nOfEvents }) {
+  const navigation = useNavigation()
+
   const [profileInfo, setProfileInfo] = useState({
     id: '111',
     name: 'Cesar Villalobos Olmos',
@@ -39,8 +42,8 @@ export default function ProfileInformation({ navigation, route, nOfEvents }) {
               md: 1 / 1
             }}
             height={{
-              base: 125,
-              md: 125
+              base: 100,
+              md: 100
             }}
           >
             <Image

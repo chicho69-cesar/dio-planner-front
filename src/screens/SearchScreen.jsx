@@ -73,19 +73,11 @@ export default function SearchScreen({ navigation, route }) {
         {results.length === 0 ? (
           <LoadingResults />
         ) : (
-          <SearchResultsList
-            navigation={navigation}
-            route={route}
-            results={results}
-          />
+          <SearchResultsList results={results} />
         )}
       </Stack>
 
-      <BottomNavigationBar
-        navigation={navigation}
-        route={route}
-        active="Search"
-      />
+      <BottomNavigationBar active="Search" />
     </Stack>
   )
 }

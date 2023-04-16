@@ -1,8 +1,11 @@
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
 import { Fab, Icon } from 'native-base'
 import { AntDesign } from '@expo/vector-icons'
 
-export function FABCreate({ navigation, route }) {
+export function FABCreate() {
+  const navigation = useNavigation()
+
   return (
     <Fab
       renderInPortal={false}

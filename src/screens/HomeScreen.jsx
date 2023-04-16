@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Stack } from 'native-base'
+
 import EventList from '../components/home/EventList'
 import LoadingEvents from '../components/home/LoadingEvents'
 import BottomNavigationBar from '../components/BottomNavigationBar'
@@ -167,17 +168,13 @@ export default function HomeScreen({ navigation, route }) {
         {events.length === 0 ? (
           <LoadingEvents />
         ) : (
-          <EventList navigation={navigation} route={route} events={events} />
+          <EventList events={events} />
         )}
       </Stack>
 
-      <FABCreate navigation={navigation} route={route} />
+      <FABCreate />
 
-      <BottomNavigationBar
-        navigation={navigation}
-        route={route}
-        active="Home"
-      />
+      <BottomNavigationBar active="Home" />
     </Stack>
   )
 }

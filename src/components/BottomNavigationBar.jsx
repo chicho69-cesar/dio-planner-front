@@ -1,8 +1,9 @@
 import React from 'react'
 import { HStack, Icon, Pressable, Text, VStack } from 'native-base'
+import { useNavigation } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
 
-export default function BottomNavigationBar({ navigation, route, active }) {
+export default function BottomNavigationBar({ active }) {
   return (
     <HStack
       w="100%"
@@ -12,8 +13,6 @@ export default function BottomNavigationBar({ navigation, route, active }) {
       justifyContent="space-between"
     >
       <NavBarElement
-        navigation={navigation}
-        route={route}
         to="Home"
         active={active === 'Home'}
         text="Inicio"
@@ -21,8 +20,6 @@ export default function BottomNavigationBar({ navigation, route, active }) {
       />
 
       <NavBarElement
-        navigation={navigation}
-        route={route}
         to="Search"
         active={active === 'Search'}
         text="Buscar"
@@ -30,8 +27,6 @@ export default function BottomNavigationBar({ navigation, route, active }) {
       />
 
       <NavBarElement
-        navigation={navigation}
-        route={route}
         to="Chats"
         active={active === 'Chats'}
         text="Chats"
@@ -39,8 +34,6 @@ export default function BottomNavigationBar({ navigation, route, active }) {
       />
 
       <NavBarElement
-        navigation={navigation}
-        route={route}
         to="Profile"
         active={active === 'Profile'}
         text="Perfil"
@@ -50,7 +43,9 @@ export default function BottomNavigationBar({ navigation, route, active }) {
   )
 }
 
-function NavBarElement({ navigation, route, to, active, text, icon }) {
+function NavBarElement({ to, active, text, icon }) {
+  const navigation = useNavigation()
+
   return (
     <Pressable onPress={() => navigation.navigate(to)}>
       <VStack w="20" h="16" alignItems="center" justifyContent="center">

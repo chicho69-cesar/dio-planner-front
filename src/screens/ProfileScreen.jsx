@@ -62,19 +62,15 @@ export default function ProfileScreen({ navigation, route }) {
     <Stack w="100%" h="100%" justifyContent="center" alignItems="center">
       <Stack w="100%" h="100%" px={4} pt={16} pb={0}>
         {myEvents.length === 0 ? (
-          <LoadingEvents navigation={navigation} route={route} nOfEvents={0} />
+          <LoadingEvents nOfEvents={0} />
         ) : (
-          <EventList navigation={navigation} route={route} events={myEvents} />
+          <EventList events={myEvents} />
         )}
       </Stack>
 
-      <FABCreate navigation={navigation} route={route} />
+      <FABCreate />
 
-      <BottomNavigationBar
-        navigation={navigation}
-        route={route}
-        active="Profile"
-      />
+      <BottomNavigationBar active="Profile" />
     </Stack>
   )
 }

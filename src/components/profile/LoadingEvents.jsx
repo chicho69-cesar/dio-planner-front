@@ -3,7 +3,7 @@ import { FlatList } from 'native-base'
 import ProfileInformation from './ProfileInformation'
 import LoadingEvent from '../LoadingEvent'
 
-export default function LoadingEvents({ navigation, route, nOfEvents }) {
+export default function LoadingEvents({ nOfEvents }) {
   const skeletons = [0, 1, 2, 3, 4]
 
   return (
@@ -14,11 +14,7 @@ export default function LoadingEvents({ navigation, route, nOfEvents }) {
       showsVerticalScrollIndicator={false}
       renderItem={({ item }) => {
         return item === 0 ? (
-          <ProfileInformation
-            navigation={navigation}
-            route={route}
-            nOfEvents={nOfEvents}
-          />
+          <ProfileInformation nOfEvents={nOfEvents} />
         ) : (
           <LoadingEvent item={item} />
         )

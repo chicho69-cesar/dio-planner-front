@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { HStack, Text, Icon, Input, Button } from 'native-base'
 import { Ionicons } from '@expo/vector-icons'
 
-export function HomeHeader({ navigation, route }) {
+export function HomeHeader() {
   return (
     <HStack w="100%" justifyContent="space-between" alignItems="center">
       <Text fontSize="lg" fontWeight="bold" color="black">
@@ -14,7 +14,7 @@ export function HomeHeader({ navigation, route }) {
   )
 }
 
-export function SearchHeader({ navigation, route }) {
+export function SearchHeader() {
   const [textSearch, setTextSearch] = useState('')
 
   const handleWrite = (text) => {
@@ -61,7 +61,7 @@ export function SearchHeader({ navigation, route }) {
   )
 }
 
-export function ProfileHeader({ navigation, route }) {
+export function ProfileHeader() {
   return (
     <HStack w="100%" justifyContent="space-between" alignItems="center">
       <Text fontSize="lg" fontWeight="bold" color="black">

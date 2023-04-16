@@ -1,8 +1,11 @@
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
 import { Column, Pressable, VStack, Image, Text } from 'native-base'
 import { StyleSheet } from 'react-native'
 
-export default function SearchResult({ navigation, route, item }) {
+export default function SearchResult({ item }) {
+  const navigation = useNavigation()
+
   const navigateToResult = (id) => {
     console.log('Hola')
   }

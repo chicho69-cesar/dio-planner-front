@@ -43,9 +43,7 @@ export default function Router() {
           component={HomeScreen}
           options={({ navigation, route }) => ({
             // eslint-disable-next-line react/no-unstable-nested-components
-            headerTitle: (props) => (
-              <HomeHeader navigation={navigation} route={route} />
-            ),
+            headerTitle: (props) => <HomeHeader />,
             headerLeft: () => null
           })}
         />
@@ -55,9 +53,7 @@ export default function Router() {
           component={SearchScreen}
           options={({ navigation, route }) => ({
             // eslint-disable-next-line react/no-unstable-nested-components
-            headerTitle: (props) => (
-              <SearchHeader navigation={navigation} route={route} />
-            ),
+            headerTitle: (props) => <SearchHeader />,
             headerLeft: () => null,
             headerStyle: { ...headerStyles.headerStyle, height: 90 },
             headerTintColor: headerStyles.headerTintColor,
@@ -82,9 +78,7 @@ export default function Router() {
           component={ProfileScreen}
           options={({ navigation, route }) => ({
             // eslint-disable-next-line react/no-unstable-nested-components
-            headerTitle: (props) => (
-              <ProfileHeader navigation={navigation} route={route} />
-            ),
+            headerTitle: (props) => <ProfileHeader />,
             headerLeft: () => null
           })}
         />
