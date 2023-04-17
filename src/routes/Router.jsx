@@ -2,7 +2,12 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import { HomeHeader, ProfileHeader, SearchHeader } from '../components/Headers'
+import {
+  CreateEventHeader,
+  HomeHeader,
+  ProfileHeader,
+  SearchHeader
+} from '../components/Headers'
 import ChatsScreen from '../screens/ChatsScreen'
 import ProfileScreen from '../screens/ProfileScreen'
 import LoginScreen from '../screens/LoginScreen'
@@ -86,7 +91,11 @@ export default function Router() {
         <Stack.Screen
           name="CreateEvent"
           component={CreateEventScreen}
-          options={{ headerShown: false }}
+          options={({ navigation, route }) => ({
+            // eslint-disable-next-line react/no-unstable-nested-components
+            headerTitle: (props) => <CreateEventHeader />,
+            headerLeft: () => null
+          })}
         />
 
         <Stack.Screen

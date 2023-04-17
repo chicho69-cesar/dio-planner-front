@@ -73,6 +73,18 @@ export function ProfileHeader() {
   )
 }
 
+export function CreateEventHeader() {
+  return (
+    <HStack w="100%" justifyContent="space-between" alignItems="center">
+      <Text fontSize="lg" fontWeight="bold" color="black">
+        Crear evento
+      </Text>
+
+      <HeaderLogo />
+    </HStack>
+  )
+}
+
 function HeaderLogo() {
   return (
     <Text
