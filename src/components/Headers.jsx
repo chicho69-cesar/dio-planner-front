@@ -1,6 +1,16 @@
 import React, { useState } from 'react'
-import { HStack, Text, Icon, Input, Button } from 'native-base'
+import {
+  HStack,
+  Text,
+  Icon,
+  Input,
+  Button,
+  AspectRatio,
+  Image
+} from 'native-base'
 import { Ionicons } from '@expo/vector-icons'
+import { selectedEventState } from '../providers/event-state'
+import { useRecoilState } from 'recoil'
 
 export function HomeHeader() {
   return (
@@ -81,6 +91,38 @@ export function CreateEventHeader() {
       </Text>
 
       <HeaderLogo />
+    </HStack>
+  )
+}
+
+export function EventHeader() {
+  const [selectedEvent] = useRecoilState(selectedEventState)
+
+  return (
+    <HStack w="100%" justifyContent="flex-start" space={3} alignItems="center">
+      <AspectRatio
+        ratio={{
+          base: 1 / 1,
+          md: 1 / 1
+        }}
+        height={{
+          base: 60,
+          md: 60
+        }}
+      >
+        <Image
+          rounded="full"
+          resizeMode="cover"
+          alt={selectedEvent.name}
+          source={{
+            uri: selectedEvent.img
+          }}
+        />
+      </AspectRatio>
+
+      <Text fontSize="xl" color="black" fontWeight="bold" isTruncated>
+        {selectedEvent.name}
+      </Text>
     </HStack>
   )
 }

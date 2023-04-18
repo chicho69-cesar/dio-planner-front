@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import {
   CreateEventHeader,
+  EventHeader,
   HomeHeader,
   ProfileHeader,
   SearchHeader
@@ -101,7 +102,14 @@ export default function Router() {
         <Stack.Screen
           name="Event"
           component={EventScreen}
-          options={{ headerShown: false }}
+          options={({ navigation, route }) => ({
+            // eslint-disable-next-line react/no-unstable-nested-components
+            headerTitle: (props) => <EventHeader />,
+            headerLeft: () => null,
+            headerStyle: { ...headerStyles.headerStyle, height: 90 },
+            headerTintColor: headerStyles.headerTintColor,
+            headerTitleStyle: headerStyles.headerTitleStyle
+          })}
         />
 
         <Stack.Screen
