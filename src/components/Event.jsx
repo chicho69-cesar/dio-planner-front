@@ -9,16 +9,21 @@ import {
   Heading,
   Text
 } from 'native-base'
+import { useRecoilState } from 'recoil'
+import { getPickedDate } from '../utilities/getTextDateES'
+import { selectedEventState } from '../providers/event-state'
 
 export default function Event({ item }) {
   const navigation = useNavigation()
+  const [, setSelectedEvent] = useRecoilState(selectedEventState)
 
-  const navigateToEvent = (id) => {
-    console.log('Hola')
+  const navigateToEvent = () => {
+    setSelectedEvent({ ...item })
+    navigation.navigate('Event')
   }
 
   return (
-    <Pressable key={item.id} onPress={() => navigateToEvent(item.id)}>
+    <Pressable key={item.id} onPress={() => navigateToEvent()}>
       {({ isPressed }) => {
         return (
           <Box
@@ -54,7 +59,7 @@ export default function Event({ item }) {
                 </Heading>
 
                 <Text fontSize="sm" color="amber.500" mb={5}>
-                  {item.date}
+                  {getPickedDate(item.date)}
                 </Text>
 
                 <Text noOfLines={4} color="black" fontSize="md">

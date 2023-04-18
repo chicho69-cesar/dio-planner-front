@@ -18,6 +18,13 @@ export const theme = extendTheme({
       800: '#155e75',
       900: '#164e63'
     },
+    cards: {
+      100: '#C2FFEC99',
+      200: '#DDFFC299',
+      300: '#CBC2FF99',
+      400: '#C2FFD399',
+      500: '#FFC2D899'
+    },
     facebook: {
       100: '#3b5998'
     }
