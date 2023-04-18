@@ -128,31 +128,66 @@ export default function Router() {
         <Stack.Screen
           name="AddGuest"
           component={AddGuestScreen}
-          options={{ headerShown: false }}
+          options={({ navigation, route }) => ({
+            // eslint-disable-next-line react/no-unstable-nested-components
+            headerTitle: (props) => <EventHeader />,
+            headerLeft: () => null,
+            headerStyle: { ...headerStyles.headerStyle, height: 90 },
+            headerTintColor: headerStyles.headerTintColor,
+            headerTitleStyle: headerStyles.headerTitleStyle
+          })}
         />
 
         <Stack.Screen
           name="TodoList"
           component={TodoListScreen}
-          options={{ headerShown: false }}
+          options={({ navigation, route }) => ({
+            // eslint-disable-next-line react/no-unstable-nested-components
+            headerTitle: (props) => <EventHeader />,
+            headerLeft: () => null,
+            headerStyle: { ...headerStyles.headerStyle, height: 90 },
+            headerTintColor: headerStyles.headerTintColor,
+            headerTitleStyle: headerStyles.headerTitleStyle
+          })}
         />
 
         <Stack.Screen
           name="Purchases"
           component={PurchasesAndExpensesScreen}
-          options={{ headerShown: false }}
+          options={({ navigation, route }) => ({
+            // eslint-disable-next-line react/no-unstable-nested-components
+            headerTitle: (props) => <EventHeader />,
+            headerLeft: () => null,
+            headerStyle: { ...headerStyles.headerStyle, height: 90 },
+            headerTintColor: headerStyles.headerTintColor,
+            headerTitleStyle: headerStyles.headerTitleStyle
+          })}
         />
 
         <Stack.Screen
           name="Memories"
           component={MemoriesScreen}
-          options={{ headerShown: false }}
+          options={({ navigation, route }) => ({
+            // eslint-disable-next-line react/no-unstable-nested-components
+            headerTitle: (props) => <EventHeader />,
+            headerLeft: () => null,
+            headerStyle: { ...headerStyles.headerStyle, height: 90 },
+            headerTintColor: headerStyles.headerTintColor,
+            headerTitleStyle: headerStyles.headerTitleStyle
+          })}
         />
 
         <Stack.Screen
           name="EventGrade"
           component={EventGradeScreen}
-          options={{ headerShown: false }}
+          options={({ navigation, route }) => ({
+            // eslint-disable-next-line react/no-unstable-nested-components
+            headerTitle: (props) => <EventHeader />,
+            headerLeft: () => null,
+            headerStyle: { ...headerStyles.headerStyle, height: 90 },
+            headerTintColor: headerStyles.headerTintColor,
+            headerTitleStyle: headerStyles.headerTitleStyle
+          })}
         />
 
         <Stack.Screen

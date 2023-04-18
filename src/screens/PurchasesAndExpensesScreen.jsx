@@ -1,10 +1,15 @@
 import React from 'react'
-import { Text } from 'native-base'
+import { Stack } from 'native-base'
+import BottomNavigationBar from '../components/BottomNavigationBar'
 
 export default function PurchasesAndExpensesScreen({ navigation, route }) {
   return (
-    <Text fontSize="2xl" color="black">
-      Las compras y los gastos necesarios para la fiesta
-    </Text>
+    <Stack w="100%" h="100%" alignItems="center" justifyContent="center">
+      <Stack w="100%" h="100%" px={4} pt={16} pb={0}>
+        {/*  */}
+      </Stack>
+
+      <BottomNavigationBar active="None" />
+    </Stack>
   )
 }
