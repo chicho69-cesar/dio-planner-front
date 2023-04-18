@@ -57,13 +57,13 @@ export function SearchHeader() {
         rounded="full"
         shadow={2}
         colorScheme="amber"
-        bg="amber.600"
+        bg="amber.400"
         onPress={handleSearch}
       >
         <Icon
           as={<Ionicons name="ios-search" />}
           size={5}
-          color="gray.900"
+          color="coolGray.800"
           fontWeight="bold"
         />
       </Button>

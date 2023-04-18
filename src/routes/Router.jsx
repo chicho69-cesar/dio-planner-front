@@ -115,7 +115,14 @@ export default function Router() {
         <Stack.Screen
           name="Guests"
           component={GuestsScreen}
-          options={{ headerShown: false }}
+          options={({ navigation, route }) => ({
+            // eslint-disable-next-line react/no-unstable-nested-components
+            headerTitle: (props) => <EventHeader />,
+            headerLeft: () => null,
+            headerStyle: { ...headerStyles.headerStyle, height: 90 },
+            headerTintColor: headerStyles.headerTintColor,
+            headerTitleStyle: headerStyles.headerTitleStyle
+          })}
         />
 
         <Stack.Screen
