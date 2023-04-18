@@ -79,7 +79,7 @@ export default function CreateEventScreen({ navigation }) {
 
   const onCancel = () => {
     setData({})
-    navigation.navigate('Home')
+    navigation.goBack()
   }
 
   return (
