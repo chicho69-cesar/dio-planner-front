@@ -7,7 +7,7 @@ import Main from './src/Main'
 export default function App() {
   return (
     <RecoilRoot>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       <Main />
     </RecoilRoot>
   )

@@ -213,7 +213,7 @@ export default function CreateEventScreen({ navigation }) {
               />
 
               <FormAction
-                bg="coolGray.400"
+                bg="coolGray.800"
                 color="white"
                 text="Cancelar"
                 w="45%"

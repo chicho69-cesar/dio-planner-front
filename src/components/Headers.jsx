@@ -15,7 +15,7 @@ import { useRecoilState } from 'recoil'
 export function HomeHeader() {
   return (
     <HStack w="100%" justifyContent="space-between" alignItems="center">
-      <Text fontSize="lg" fontWeight="bold" color="black">
+      <Text fontSize="lg" fontWeight="bold" color="white">
         Próximos eventos
       </Text>
 
@@ -74,7 +74,7 @@ export function SearchHeader() {
 export function ProfileHeader() {
   return (
     <HStack w="100%" justifyContent="space-between" alignItems="center">
-      <Text fontSize="lg" fontWeight="bold" color="black">
+      <Text fontSize="lg" fontWeight="bold" color="white">
         Mi perfil publico
       </Text>
 
@@ -86,7 +86,7 @@ export function ProfileHeader() {
 export function CreateEventHeader() {
   return (
     <HStack w="100%" justifyContent="space-between" alignItems="center">
-      <Text fontSize="lg" fontWeight="bold" color="black">
+      <Text fontSize="lg" fontWeight="bold" color="white">
         Crear evento
       </Text>
 
@@ -120,7 +120,7 @@ export function EventHeader() {
         />
       </AspectRatio>
 
-      <Text fontSize="xl" color="black" fontWeight="bold" isTruncated>
+      <Text fontSize="xl" color="white" fontWeight="bold" isTruncated>
         {selectedEvent.name}
       </Text>
     </HStack>
@@ -132,7 +132,7 @@ function HeaderLogo() {
     <Text
       fontSize="2xl"
       paddingX="2"
-      color="black"
+      color="white"
       fontStyle="italic"
       fontWeight="bold"
     >

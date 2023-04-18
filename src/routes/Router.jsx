@@ -160,7 +160,7 @@ export default function Router() {
 
 const headerStyles = {
   headerStyle: {
-    backgroundColor: '#fbbf24',
+    backgroundColor: '#1f2937',
     elevation: 5,
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15
@@ -168,6 +168,6 @@ const headerStyles = {
   headerTintColor: '#fff',
   headerTitleStyle: {
     fontWeight: 'bold',
-    color: '#101010'
+    color: '#f1f1f1'
   }
 }
