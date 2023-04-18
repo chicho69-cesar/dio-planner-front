@@ -9,3 +9,8 @@ export const errorsCreateEventState = atom({
   key: 'errorsCreateEventState',
   default: {}
 })
+
+export const selectedEventState = atom({
+  key: 'selectedEventState',
+  default: {}
+})
