@@ -28,23 +28,40 @@ export default function CreateEventScreen({ navigation }) {
   const [errors, setErrors] = useRecoilState(errorsCreateEventState)
   const [data, setData] = useRecoilState(createEventState)
 
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [topic, setTopic] = useState('fiesta')
   const [pickedDate, setPickedDate] = useState(new Date())
-  const [showCalendar, setShowCalendar] = useState(false)
-  const [topic, setTopic] = useState('')
   const [accessibilityValue, setAccessibilityValue] = useState('1')
+  const [location, setLocation] = useState('')
+  const [showCalendar, setShowCalendar] = useState(false)
 
   useEffect(() => {
     setData({
+      name: name,
+      description: description,
+      topic: topic,
       date: pickedDate,
-      accessibility: accessibilityValue
+      accessibility: accessibilityValue,
+      location: location
     })
-  }, [setData, pickedDate, accessibilityValue])
+  }, [
+    setData,
+    name,
+    description,
+    topic,
+    pickedDate,
+    accessibilityValue,
+    location
+  ])
 
   const onChangeName = (text) => {
+    setName(text)
     setData({ ...data, name: text })
   }
 
   const onChangeDescription = (text) => {
+    setDescription(text)
     setData({ ...data, description: text })
   }
 
