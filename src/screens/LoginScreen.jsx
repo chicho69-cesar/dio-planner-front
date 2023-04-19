@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { StatusBar } from 'expo-status-bar'
 import {
   Button,
   Checkbox,
@@ -55,105 +56,109 @@ export default function LoginScreen({ navigation }) {
   }
 
   return (
-    <Stack
-      w="100%"
-      h="100%"
-      alignItems="center"
-      justifyContent="center"
-      bg="white"
-    >
-      <Logo />
+    <>
+      <StatusBar style="dark" />
 
-      <FormElement to="email" isRequired={true}>
-        <Input
-          w={{ base: '75%', md: '25%' }}
-          color="gray.800"
-          fontSize="lg"
-          placeholder="Email"
-          onChangeText={onChangeEmail}
-          variant="rounded"
-          p="3"
-          focusOutlineColor="gray.800"
-        />
-
-        <FormValidation to="email" />
-      </FormElement>
-
-      <FormElement to="password" isRequired={true} mb={2}>
-        <Input
-          w={{ base: '75%', md: '25%' }}
-          type={showPassword ? 'text' : 'password'}
-          color="gray.800"
-          fontSize="lg"
-          placeholder="Password"
-          onChangeText={onChangePassword}
-          variant="rounded"
-          p="3"
-          focusOutlineColor="gray.800"
-          InputRightElement={
-            <Pressable onPress={() => setShowPassword(!showPassword)}>
-              <Icon
-                as={
-                  <MaterialIcons
-                    name={showPassword ? 'visibility' : 'visibility-off'}
-                  />
-                }
-                size={5}
-                mr="2"
-                color="gray.600"
-              />
-            </Pressable>
-          }
-        />
-
-        <FormValidation to="password" />
-      </FormElement>
-
-      <FormElement mb={2}>
-        <Checkbox
-          value="remember"
-          my="3"
-          colorScheme="amber"
-          w="100%"
-          alignItems="start"
-          onChange={onChangeRemember}
-          _text={{ color: 'black' }}
-        >
-          Recuérdeme
-        </Checkbox>
-      </FormElement>
-
-      <Button
-        bg="amber.400"
-        borderColor="gray.800"
-        borderWidth={1}
-        colorScheme="dark"
-        variant="subtle"
-        rounded="full"
-        px={10}
-        py={2}
-        shadow={2}
-        mb={6}
-        w="75%"
-        _text={{ color: 'white', fontSize: 'lg', fontWeight: 'semibold' }}
-        onPress={onSubmit}
+      <Stack
+        w="100%"
+        h="100%"
+        alignItems="center"
+        justifyContent="center"
+        bg="white"
       >
-        Iniciar sesión
-      </Button>
+        <Logo />
 
-      <Pressable onPress={() => navigation.navigate('Register')} mb={12}>
-        <Text color="black" fontSize="md">
-          ¿No tienes cuenta?{' '}
-          <Text color="amber.400" fontWeight="semibold">
-            Regístrate
+        <FormElement to="email" isRequired={true}>
+          <Input
+            w={{ base: '75%', md: '25%' }}
+            color="gray.800"
+            fontSize="lg"
+            placeholder="Email"
+            onChangeText={onChangeEmail}
+            variant="rounded"
+            p="3"
+            focusOutlineColor="gray.800"
+          />
+
+          <FormValidation to="email" />
+        </FormElement>
+
+        <FormElement to="password" isRequired={true} mb={2}>
+          <Input
+            w={{ base: '75%', md: '25%' }}
+            type={showPassword ? 'text' : 'password'}
+            color="gray.800"
+            fontSize="lg"
+            placeholder="Password"
+            onChangeText={onChangePassword}
+            variant="rounded"
+            p="3"
+            focusOutlineColor="gray.800"
+            InputRightElement={
+              <Pressable onPress={() => setShowPassword(!showPassword)}>
+                <Icon
+                  as={
+                    <MaterialIcons
+                      name={showPassword ? 'visibility' : 'visibility-off'}
+                    />
+                  }
+                  size={5}
+                  mr="2"
+                  color="gray.600"
+                />
+              </Pressable>
+            }
+          />
+
+          <FormValidation to="password" />
+        </FormElement>
+
+        <FormElement mb={2}>
+          <Checkbox
+            value="remember"
+            my="3"
+            colorScheme="amber"
+            w="100%"
+            alignItems="start"
+            onChange={onChangeRemember}
+            _text={{ color: 'black' }}
+          >
+            Recuérdeme
+          </Checkbox>
+        </FormElement>
+
+        <Button
+          bg="amber.400"
+          borderColor="gray.800"
+          borderWidth={1}
+          colorScheme="dark"
+          variant="subtle"
+          rounded="full"
+          px={10}
+          py={2}
+          shadow={2}
+          mb={6}
+          w="75%"
+          _text={{ color: 'white', fontSize: 'lg', fontWeight: 'semibold' }}
+          onPress={onSubmit}
+        >
+          Iniciar sesión
+        </Button>
+
+        <Pressable onPress={() => navigation.navigate('Register')} mb={12}>
+          <Text color="black" fontSize="md">
+            ¿No tienes cuenta?{' '}
+            <Text color="amber.400" fontWeight="semibold">
+              Regístrate
+            </Text>
           </Text>
-        </Text>
-      </Pressable>
+        </Pressable>
 
-      <HStack w="75%" space={3} justifyContent="center">
-        <FacebookLogin />
-        <GoogleLogin />
-      </HStack>
-    </Stack>
+        <HStack w="75%" space={3} justifyContent="center">
+          <FacebookLogin />
+          <GoogleLogin />
+        </HStack>
+      </Stack>
+    </>
   )
 }
