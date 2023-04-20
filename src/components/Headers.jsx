@@ -106,8 +106,8 @@ export function EventHeader() {
           md: 1 / 1
         }}
         height={{
-          base: 60,
-          md: 60
+          base: 50,
+          md: 50
         }}
       >
         <Image
