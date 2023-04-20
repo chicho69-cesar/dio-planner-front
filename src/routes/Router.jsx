@@ -9,6 +9,7 @@ import {
   ProfileHeader,
   SearchHeader
 } from '../components/Headers'
+
 import ChatsScreen from '../screens/ChatsScreen'
 import ProfileScreen from '../screens/ProfileScreen'
 import LoginScreen from '../screens/LoginScreen'
@@ -193,6 +194,12 @@ export default function Router() {
         <Stack.Screen
           name="EditInfo"
           component={EditInfoScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Invitations"
+          component={MemoriesScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
