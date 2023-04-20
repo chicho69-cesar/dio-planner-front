@@ -102,7 +102,7 @@ export default function CreateEventScreen({ navigation }) {
   return (
     <Stack w="100%" h="100%" alignItems="center" justifyContent="center">
       <Stack h="100%" w="100%" pt={16} pb={0}>
-        <ScrollView w="100%" h="100%">
+        <ScrollView w="100%" h="100%" showsVerticalScrollIndicator={false}>
           <View w="100%" alignItems="center" justifyContent="center" mt="6">
             <Heading size="md" color="black" w="90%">
               Datos del evento
