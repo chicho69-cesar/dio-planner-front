@@ -2,7 +2,7 @@ import React from 'react'
 import { Pressable, Icon } from 'native-base'
 import { MaterialIcons } from '@expo/vector-icons'
 
-export default function TodoAction({ onPress, icon, bg, color }) {
+export default function Action({ onPress, icon, bg, color }) {
   return (
     <Pressable bg={bg} p={1} rounded="sm" onPress={onPress}>
       <Icon
