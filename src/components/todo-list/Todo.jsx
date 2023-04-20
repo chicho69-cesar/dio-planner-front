@@ -20,7 +20,12 @@ export default function Todo({ todo, onComplete, onEdit, onDelete }) {
           {getPickedDate(todo.date)}
         </Text>
 
-        <Text fontSize="sm" color="black" noOfLines={4}>
+        <Text
+          fontSize="sm"
+          color="black"
+          noOfLines={4}
+          strikeThrough={todo.complete}
+        >
           {todo.text}
         </Text>
       </VStack>

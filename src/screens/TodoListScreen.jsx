@@ -98,7 +98,7 @@ export default function TodoListScreen({ navigation, route }) {
   return (
     <Stack w="100%" h="100%" alignItems="center" justifyContent="center">
       <Stack w="100%" h="100%" px={4} pt={16} pb={0}>
-        <ScrollView w="100%" h="100%">
+        <ScrollView w="100%" h="100%" showsVerticalScrollIndicator={false}>
           <Heading
             w="100%"
             textAlign="center"
