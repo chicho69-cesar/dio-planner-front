@@ -1,7 +1,7 @@
 import React from 'react'
 import { HStack, VStack, Text } from 'native-base'
 import { getPickedDate } from '../../utilities/getTextDateES.js'
-import TodoAction from './TodoAction.jsx'
+import Action from '../Action.jsx'
 
 export default function Todo({ todo, onComplete, onEdit, onDelete }) {
   return (
@@ -31,21 +31,21 @@ export default function Todo({ todo, onComplete, onEdit, onDelete }) {
       </VStack>
 
       <HStack w="32.5%" alignItems="center" justifyContent="space-between">
-        <TodoAction
+        <Action
           bg="green.100"
           color="green.900"
           icon={todo.complete ? 'check-box' : 'check-box-outline-blank'}
           onPress={() => onComplete(todo.id)}
         />
 
-        <TodoAction
+        <Action
           bg="amber.100"
           color="amber.600"
           icon="mode-edit"
           onPress={() => onEdit(todo.id)}
         />
 
-        <TodoAction
+        <Action
           bg="red.100"
           color="red.900"
           icon="delete"

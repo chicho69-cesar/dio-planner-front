@@ -52,6 +52,7 @@ export default function TodoListScreen({ navigation, route }) {
     setEdit(true)
     setEditTodo(editedTodo)
     setTodoText(editedTodo.text)
+    setPickedDate(editedTodo.date)
   }
 
   const onHandleDelete = (id) => {
@@ -75,9 +76,9 @@ export default function TodoListScreen({ navigation, route }) {
             date: pickedDate,
             complete: false
           }
-        } else {
-          return todo
         }
+
+        return todo
       })
     )
   }
