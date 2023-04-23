@@ -7,8 +7,8 @@ import {
   Heading,
   Icon,
   Image,
+  Link,
   Pressable,
-  Switch,
   Text,
   VStack
 } from 'native-base'
@@ -17,20 +17,15 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 export default function ProfileInformation({ nOfEvents }) {
   const navigation = useNavigation()
 
-  const [profileInfo, setProfileInfo] = useState({
+  const [profileInfo] = useState({
     id: '111',
     name: 'Cesar Villalobos Olmos',
     email: 'cesarvillalobosolmos.01@gmail.com',
     description:
       'Officia minim consequat officia do enim exercitation excepteur in incididunt incididunt pariatur ut ea velit.',
     picture:
-      'https://i.pinimg.com/originals/2c/4c/67/2c4c67f144c8ed1600be38d06d8d1765.jpg',
-    darkTheme: true
+      'https://i.pinimg.com/originals/2c/4c/67/2c4c67f144c8ed1600be38d06d8d1765.jpg'
   })
-
-  const handleChangeTheme = () => {
-    setProfileInfo({ ...profileInfo, darkTheme: !profileInfo.darkTheme })
-  }
 
   return (
     <Box w="100%">
@@ -56,13 +51,21 @@ export default function ProfileInformation({ nOfEvents }) {
             />
           </AspectRatio>
 
-          <Switch
-            defaultIsChecked={profileInfo.darkTheme}
-            isChecked={profileInfo.darkTheme}
-            colorScheme="amber"
-            size="lg"
-            onToggle={handleChangeTheme}
-          />
+          <Link onPress={() => navigation.navigate('Invitations')} mt={3}>
+            <Box
+              px={2}
+              py={1}
+              bg="coolGray.200"
+              rounded="md"
+              _text={{
+                fontSize: 'sm',
+                color: 'coolGray.800',
+                fontWeight: 'medium'
+              }}
+            >
+              Invitaciones
+            </Box>
+          </Link>
         </VStack>
 
         <VStack justifyContent="center" alignItems="flex-start">
@@ -105,7 +108,7 @@ export default function ProfileInformation({ nOfEvents }) {
         </VStack>
       </HStack>
 
-      <Heading color="coolGray.900" size="md">
+      <Heading color="coolGray.900" size="md" mt={3}>
         Mis eventos
       </Heading>
     </Box>
