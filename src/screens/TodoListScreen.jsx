@@ -152,8 +152,8 @@ export default function TodoListScreen({ navigation, route }) {
               rounded="md"
               mb={3}
               shadow={2}
-              colorScheme="amber"
-              bg="amber.400"
+              colorScheme="coolGray"
+              bg="coolGray.800"
               onPress={onHandleSubmit}
             >
               {edit ? 'Editar' : 'Agregar'}

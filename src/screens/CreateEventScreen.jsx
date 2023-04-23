@@ -22,7 +22,7 @@ import {
 } from '../providers/event-state'
 import FormWrapper from '../components/create-event/FormWrapper'
 import ButtonAction from '../components/create-event/ButtonAction'
-import FormAction from '../components/create-event/FormAction'
+import FormAction from '../components/FormAction'
 
 export default function CreateEventScreen({ navigation }) {
   const [errors, setErrors] = useRecoilState(errorsCreateEventState)

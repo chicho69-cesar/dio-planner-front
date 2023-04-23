@@ -130,7 +130,7 @@ export default function PurchasesAndExpensesScreen({ navigation, route }) {
               />
 
               <Button
-                bg="coolGray.600"
+                bg="coolGray.800"
                 colorScheme="coolGray"
                 w="45%"
                 rounded="md"

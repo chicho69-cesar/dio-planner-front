@@ -110,8 +110,9 @@ export default function AddGuestScreen({ navigation, route }) {
             </FormControl>
 
             <Button
-              w="16"
-              h="16"
+              w="12"
+              h="12"
+              mr={1}
               rounded="full"
               shadow={2}
               colorScheme="amber"
