@@ -6,6 +6,7 @@ import {
   CreateEventHeader,
   EventHeader,
   HomeHeader,
+  InvitationsHeader,
   ProfileHeader,
   SearchHeader
 } from '../components/Headers'
@@ -26,6 +27,7 @@ import PurchasesAndExpensesScreen from '../screens/PurchasesAndExpensesScreen'
 import MemoriesScreen from '../screens/MemoriesScreen'
 import EventGradeScreen from '../screens/EventGradeScreen'
 import EditInfoScreen from '../screens/EditInfoScreen'
+import InvitationsScreen from '../screens/InvitationsScreen'
 
 const Stack = createStackNavigator()
 
@@ -199,8 +201,12 @@ export default function Router() {
 
         <Stack.Screen
           name="Invitations"
-          component={MemoriesScreen}
-          options={{ headerShown: false }}
+          component={InvitationsScreen}
+          options={({ navigation, route }) => ({
+            // eslint-disable-next-line react/no-unstable-nested-components
+            headerTitle: (props) => <InvitationsHeader />,
+            headerLeft: () => null
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>
