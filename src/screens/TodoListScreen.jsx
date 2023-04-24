@@ -11,7 +11,7 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker'
 
 import BottomNavigationBar from '../components/BottomNavigationBar'
-import ButtonAction from '../components/create-event/ButtonAction'
+import ButtonAction from '../components/ButtonAction'
 import Todo from '../components/todo-list/Todo'
 import { getPickedDate } from '../utilities/getTextDateES'
 

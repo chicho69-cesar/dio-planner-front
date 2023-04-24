@@ -12,7 +12,6 @@ export default function Budget({ budget }) {
         borderWidth={1}
         borderColor="coolGray.600"
         bg="coolGray.100"
-        shadow={2}
         rounded="lg"
         my={3}
         p={4}

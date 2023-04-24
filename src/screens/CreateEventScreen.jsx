@@ -21,7 +21,7 @@ import {
   errorsCreateEventState
 } from '../providers/event-state'
 import FormWrapper from '../components/create-event/FormWrapper'
-import ButtonAction from '../components/create-event/ButtonAction'
+import ButtonAction from '../components/ButtonAction'
 import FormAction from '../components/FormAction'
 
 export default function CreateEventScreen({ navigation }) {
