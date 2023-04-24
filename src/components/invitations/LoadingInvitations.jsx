@@ -1,6 +1,6 @@
 import React from 'react'
 import { VStack, HStack, Box, Skeleton } from 'native-base'
-import CustomDivider from '..CustomDivider'
+import CustomDivider from '../CustomDivider'
 
 export default function LoadingInvitations() {
   return (
