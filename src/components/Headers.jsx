@@ -107,6 +107,18 @@ export function InvitationsHeader() {
   )
 }
 
+export function EditInfoHeader() {
+  return (
+    <HStack w="100%" justifyContent="space-between" alignItems="center">
+      <Text fontSize="lg" fontWeight="bold" color="white">
+        Edita tu información
+      </Text>
+
+      <HeaderLogo />
+    </HStack>
+  )
+}
+
 export function EventHeader() {
   const [selectedEvent] = useRecoilState(selectedEventState)
 

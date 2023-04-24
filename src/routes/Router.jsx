@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import {
   CreateEventHeader,
+  EditInfoHeader,
   EventHeader,
   HomeHeader,
   InvitationsHeader,
@@ -25,6 +26,7 @@ import AddGuestScreen from '../screens/AddGuestScreen'
 import TodoListScreen from '../screens/TodoListScreen'
 import PurchasesAndExpensesScreen from '../screens/PurchasesAndExpensesScreen'
 import MemoriesScreen from '../screens/MemoriesScreen'
+import ShareMemoryScreen from '../screens/ShareMemoryScreen'
 import EventGradeScreen from '../screens/EventGradeScreen'
 import EditInfoScreen from '../screens/EditInfoScreen'
 import InvitationsScreen from '../screens/InvitationsScreen'
@@ -181,6 +183,19 @@ export default function Router() {
         />
 
         <Stack.Screen
+          name="ShareMemory"
+          component={ShareMemoryScreen}
+          options={({ navigation, route }) => ({
+            // eslint-disable-next-line react/no-unstable-nested-components
+            headerTitle: (props) => <EventHeader />,
+            headerLeft: () => null,
+            headerStyle: { ...headerStyles.headerStyle, height: 90 },
+            headerTintColor: headerStyles.headerTintColor,
+            headerTitleStyle: headerStyles.headerTitleStyle
+          })}
+        />
+
+        <Stack.Screen
           name="EventGrade"
           component={EventGradeScreen}
           options={({ navigation, route }) => ({
@@ -196,7 +211,11 @@ export default function Router() {
         <Stack.Screen
           name="EditInfo"
           component={EditInfoScreen}
-          options={{ headerShown: false }}
+          options={({ navigation, route }) => ({
+            // eslint-disable-next-line react/no-unstable-nested-components
+            headerTitle: (props) => <EditInfoHeader />,
+            headerLeft: () => null
+          })}
         />
 
         <Stack.Screen
