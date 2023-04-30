@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react'
 import {
-  Heading,
   HStack,
+  Heading,
   ScrollView,
   Spinner,
   Stack,
   Text,
   View
 } from 'native-base'
+import React, { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
-import { selectedEventState } from '../providers/event-state'
 import BottomNavigationBar from '../components/BottomNavigationBar'
-import ColumnMemories from '../components/memories/ColumnMemories'
 import ButtonAction from '../components/ButtonAction'
+import ColumnMemories from '../components/memories/ColumnMemories'
+import { selectedEventState } from '../providers/event-state'
 
 const xd = [
   {
@@ -87,11 +87,11 @@ export default function MemoriesScreen({ navigation, route }) {
             ) : (
               <>
                 <ColumnMemories
-                  mems={memories.filter((_, index) => index % 2 === 0)}
+                  memories={memories.filter((_, index) => index % 2 === 0)}
                 />
 
                 <ColumnMemories
-                  mems={memories.filter((_, index) => index % 2 !== 0)}
+                  memories={memories.filter((_, index) => index % 2 !== 0)}
                 />
               </>
             )}
