@@ -1,19 +1,19 @@
-import React from 'react'
-import {
-  Stack,
-  ScrollView,
-  Heading,
-  Text,
-  VStack,
-  Pressable,
-  HStack,
-  Icon
-} from 'native-base'
-import BottomNavigationBar from '../components/BottomNavigationBar'
-import { useRecoilState } from 'recoil'
-import { selectedEventState } from '../providers/event-state'
-import Countdown from '../components/Countdown'
 import { MaterialIcons } from '@expo/vector-icons'
+import {
+  HStack,
+  Heading,
+  Icon,
+  Pressable,
+  ScrollView,
+  Stack,
+  Text,
+  VStack
+} from 'native-base'
+import React from 'react'
+import { useRecoilState } from 'recoil'
+import BottomNavigationBar from '../components/BottomNavigationBar'
+import Countdown from '../components/Countdown'
+import { selectedEventState } from '../providers/event-state'
 
 const cards = [
   {
@@ -59,7 +59,12 @@ export default function EventScreen({ navigation, route }) {
   return (
     <Stack w="100%" h="100%" alignItems="center" justifyContent="center">
       <Stack h="100%" w="100%" pt={16} pb={0}>
-        <ScrollView w="100%" h="100%" bg="white">
+        <ScrollView
+          w="100%"
+          h="100%"
+          bg="white"
+          showsVerticalScrollIndicator={false}
+        >
           <Heading color="black" size="md" mt={4} textAlign="center">
             Tiempo restante para el evento
           </Heading>
