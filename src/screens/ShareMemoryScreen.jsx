@@ -1,16 +1,40 @@
+import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from '@env'
+import { S3 } from 'aws-sdk'
 import * as ImagePicker from 'expo-image-picker'
 import { AspectRatio, Button, Image, Stack } from 'native-base'
 import React, { useState } from 'react'
-/* import { S3 } from 'aws-sdk'
-import mime from 'mime-types' */
-import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from '@env'
 import BottomNavigationBar from '../components/BottomNavigationBar'
+
+const s3 = new S3({
+  region: 'us-east-2',
+  accessKeyId: AWS_ACCESS_KEY_ID,
+  secretAccessKey: AWS_SECRET_ACCESS_KEY
+})
 
 export default function ShareMemoryScreen({ navigation, route }) {
   const [image, setImage] = useState(null)
 
+  // TODO: Remember that "fileNameInBucket" is the name of the image that we need to save in db
+  // NOTE: The structure of the link will be: https://dio-planner.s3.us-east-2.amazonaws.com/${fileNameInBucket}
   const uploadImage = async (uri, type, name) => {
-    console.log({ AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY })
+    const response = await fetch(uri)
+    const blob = await response.blob()
+    const fileNameInBucket = `images/${Date.now().toString()}-${name}`
+
+    const options = {
+      Bucket: 'dio-planner',
+      Key: fileNameInBucket,
+      ContentType: type,
+      Body: blob
+    }
+
+    s3.putObject(options, (error, data) => {
+      if (error) {
+        console.error(error)
+      } else {
+        console.log('Image uploaded successfully:', data)
+      }
+    })
   }
 
   const pickImage = async () => {
@@ -20,8 +44,6 @@ export default function ShareMemoryScreen({ navigation, route }) {
       quality: 1
     })
 
-    console.log(result)
-
     if (!result.canceled) {
       setImage(result.assets[0].uri)
 
@@ -29,7 +51,6 @@ export default function ShareMemoryScreen({ navigation, route }) {
       const type = 'image/jpeg'
       const name = result.assets[0].fileName || 'image.jpg'
 
-      console.log({ uri, type, name })
       await uploadImage(uri, type, name)
     }
   }
