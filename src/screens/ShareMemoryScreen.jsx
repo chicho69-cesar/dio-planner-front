@@ -1,13 +1,16 @@
 import * as ImagePicker from 'expo-image-picker'
 import { AspectRatio, Button, Image, Stack } from 'native-base'
 import React, { useState } from 'react'
+/* import { S3 } from 'aws-sdk'
+import mime from 'mime-types' */
+import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from '@env'
 import BottomNavigationBar from '../components/BottomNavigationBar'
 
 export default function ShareMemoryScreen({ navigation, route }) {
   const [image, setImage] = useState(null)
 
   const uploadImage = async (uri, type, name) => {
-    //
+    console.log({ AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY })
   }
 
   const pickImage = async () => {
@@ -27,7 +30,7 @@ export default function ShareMemoryScreen({ navigation, route }) {
       const name = result.assets[0].fileName || 'image.jpg'
 
       console.log({ uri, type, name })
-      // await uploadImage(uri, type, name)
+      await uploadImage(uri, type, name)
     }
   }
 
