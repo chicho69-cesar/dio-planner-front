@@ -1,4 +1,5 @@
 import DateTimePicker from '@react-native-community/datetimepicker'
+import * as ImagePicker from 'expo-image-picker'
 import {
   CheckIcon,
   HStack,
@@ -23,6 +24,7 @@ import {
   errorsCreateEventState
 } from '../providers/event-state'
 import { getPickedDate } from '../utilities/getTextDateES'
+import { uploadImage } from '../utilities/uploadImage'
 
 export default function CreateEventScreen({ navigation }) {
   const [errors, setErrors] = useRecoilState(errorsCreateEventState)
@@ -35,6 +37,9 @@ export default function CreateEventScreen({ navigation }) {
   const [accessibilityValue, setAccessibilityValue] = useState('1')
   const [location, setLocation] = useState('')
   const [showCalendar, setShowCalendar] = useState(false)
+  const [image, setImage] = useState(null)
+  const [imageFileName, setImageFileName] = useState(null)
+  const [errorUpload, setErrorUpload] = useState(false)
 
   useEffect(() => {
     setData({
@@ -89,12 +94,29 @@ export default function CreateEventScreen({ navigation }) {
     setData({ ...data, location: text })
   }
 
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1
+    })
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri)
+      setImageFileName(result.assets[0].fileName)
+    }
+  }
+
   const validate = () => {
     console.log('Validaciones')
   }
 
-  const onSubmit = () => {
-    console.log({ data })
+  const onSubmit = async () => {
+    const uri = image
+    const type = 'image/jpeg'
+    const file = imageFileName || 'image.jpg'
+
+    setErrorUpload(await uploadImage(uri, type, file))
   }
 
   const onCancel = () => {
@@ -231,6 +253,12 @@ export default function CreateEventScreen({ navigation }) {
               focusOutlineColor="gray.800"
             />
           </FormWrapper>
+
+          <ButtonAction
+            text={image ? 'Imagen seleccionada' : 'Selecciona imagen'}
+            icon="folder-image"
+            onPress={pickImage}
+          />
 
           <View w="100%" alignItems="center" justifyContent="center" my="3">
             <HStack w="90%" justifyContent="space-between">
