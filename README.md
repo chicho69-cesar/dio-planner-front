@@ -1,3 +1,3 @@
 # Dio Planner
 
-Aplicación movil para la organizacion de eventos
+Aplicación móvil para la organización de eventos
