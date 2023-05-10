@@ -1,5 +1,3 @@
-import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from '@env'
-import { S3 } from 'aws-sdk'
 import * as ImagePicker from 'expo-image-picker'
 import {
   AspectRatio,
@@ -15,12 +13,7 @@ import {
 } from 'native-base'
 import React, { useState } from 'react'
 import BottomNavigationBar from '../components/BottomNavigationBar'
-
-const s3 = new S3({
-  region: 'us-east-2',
-  accessKeyId: AWS_ACCESS_KEY_ID,
-  secretAccessKey: AWS_SECRET_ACCESS_KEY
-})
+import { uploadImage } from '../utilities/uploadImage'
 
 export default function ShareMemoryScreen({ navigation, route }) {
   const [image, setImage] = useState(null)
@@ -28,31 +21,6 @@ export default function ShareMemoryScreen({ navigation, route }) {
   const [description, setDescription] = useState('')
   const [errorUpload, setErrorUpload] = useState(false)
   const [isUpload, setIsUpload] = useState(false)
-
-  // NOTE: Remember that "fileNameInBucket" is the name of the image that we need to save in db
-  // NOTE: The structure of the link will be: https://dio-planner.s3.us-east-2.amazonaws.com/${fileNameInBucket}
-  const uploadImage = async (uri, type, name) => {
-    const response = await fetch(uri)
-    const blob = await response.blob()
-    const fileNameInBucket = `images/${Date.now().toString()}-${name}`
-
-    const options = {
-      Bucket: 'dio-planner',
-      Key: fileNameInBucket,
-      ContentType: type,
-      Body: blob
-    }
-
-    s3.putObject(options, (error, data) => {
-      if (error) {
-        console.error(error)
-        setErrorUpload(true)
-      } else {
-        console.log('Image uploaded successfully:', data)
-        setErrorUpload(false)
-      }
-    })
-  }
 
   const onChangeDescription = (text) => {
     setDescription(text)
@@ -76,14 +44,11 @@ export default function ShareMemoryScreen({ navigation, route }) {
       return
     }
 
-    console.log({ image, description })
-
     const uri = image
     const type = 'image/jpeg'
     const name = imageFileName || 'image.jpg'
 
-    await uploadImage(uri, type, name)
-
+    setErrorUpload(await uploadImage(uri, type, name))
     setIsUpload(true)
   }
 
