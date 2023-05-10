@@ -84,8 +84,9 @@ export default function CreateEventScreen({ navigation }) {
     setData({ ...data, accessibility: value })
   }
 
-  const onChangeLocation = () => {
-    console.log('Hola')
+  const onChangeLocation = (text) => {
+    setLocation(text)
+    setData({ ...data, location: text })
   }
 
   const validate = () => {
@@ -215,12 +216,21 @@ export default function CreateEventScreen({ navigation }) {
             </Radio.Group>
           </FormWrapper>
 
-          {/* TODO: Cambiar usar maps por escribir la ubicacion en un TextArea */}
-          <ButtonAction
-            text="Selecciona la ubicación"
-            icon="google-maps"
-            onPress={onChangeLocation}
-          />
+          <FormWrapper to="location" isRequired={true}>
+            <TextArea
+              w={{ base: '90%', md: '25%' }}
+              h={16}
+              color="gray.800"
+              fontSize="md"
+              placeholder="Ubicación"
+              onChangeText={onChangeLocation}
+              variant="outline"
+              rounded="md"
+              py="2"
+              px="3"
+              focusOutlineColor="gray.800"
+            />
+          </FormWrapper>
 
           <View w="100%" alignItems="center" justifyContent="center" my="3">
             <HStack w="90%" justifyContent="space-between">
