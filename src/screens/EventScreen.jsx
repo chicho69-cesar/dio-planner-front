@@ -71,6 +71,24 @@ export default function EventScreen({ navigation, route }) {
 
           <Countdown targetDate={selectedEvent.date} />
 
+          <HStack w="100%" justifyContent="center" my={2}>
+            <Text fontSize="md" color="black" w="90%">
+              <Heading size="sm" color="black">
+                Ubicación del evento:{' '}
+              </Heading>
+              {selectedEvent.location}
+            </Text>
+          </HStack>
+
+          <HStack w="100%" justifyContent="center" my={2}>
+            <Text fontSize="md" color="black" w="90%">
+              <Heading size="sm" color="black">
+                Descripción del evento:{' '}
+              </Heading>
+              {selectedEvent.description}
+            </Text>
+          </HStack>
+
           <Heading color="black" size="md" mt={4} textAlign="center">
             Acciones de interés
           </Heading>

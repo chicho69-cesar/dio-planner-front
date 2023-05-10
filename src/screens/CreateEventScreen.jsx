@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from 'react'
+import DateTimePicker from '@react-native-community/datetimepicker'
 import {
-  Stack,
-  ScrollView,
-  Input,
-  Heading,
-  View,
-  TextArea,
-  Select,
   CheckIcon,
   HStack,
-  Radio
+  Heading,
+  Input,
+  Radio,
+  ScrollView,
+  Select,
+  Stack,
+  TextArea,
+  View
 } from 'native-base'
+import React, { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
-import DateTimePicker from '@react-native-community/datetimepicker'
 
-import { getPickedDate } from '../utilities/getTextDateES'
 import BottomNavigationBar from '../components/BottomNavigationBar'
+import ButtonAction from '../components/ButtonAction'
+import FormAction from '../components/FormAction'
+import FormWrapper from '../components/create-event/FormWrapper'
 import {
   createEventState,
   errorsCreateEventState
 } from '../providers/event-state'
-import FormWrapper from '../components/create-event/FormWrapper'
-import ButtonAction from '../components/ButtonAction'
-import FormAction from '../components/FormAction'
+import { getPickedDate } from '../utilities/getTextDateES'
 
 export default function CreateEventScreen({ navigation }) {
   const [errors, setErrors] = useRecoilState(errorsCreateEventState)
@@ -84,7 +84,9 @@ export default function CreateEventScreen({ navigation }) {
     setData({ ...data, accessibility: value })
   }
 
-  const onChangeLocation = () => {}
+  const onChangeLocation = () => {
+    console.log('Hola')
+  }
 
   const validate = () => {
     console.log('Validaciones')
@@ -213,6 +215,7 @@ export default function CreateEventScreen({ navigation }) {
             </Radio.Group>
           </FormWrapper>
 
+          {/* TODO: Cambiar usar maps por escribir la ubicacion en un TextArea */}
           <ButtonAction
             text="Selecciona la ubicación"
             icon="google-maps"
