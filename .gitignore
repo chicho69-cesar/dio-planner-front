@@ -21,3 +21,4 @@ web-build/
 .metro-health-check*
 
 keys.md
+google-keys.json
