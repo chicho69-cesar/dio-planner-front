@@ -1,12 +1,11 @@
+import * as WebBrowser from 'expo-web-browser'
+import { Button, HStack, Text } from 'native-base'
 import React from 'react'
 import { Image, StyleSheet } from 'react-native'
-import { Button, HStack, Text } from 'native-base'
 
-export default function GoogleLogin() {
-  const googleLogin = () => {
-    console.log('Login con Google')
-  }
+WebBrowser.maybeCompleteAuthSession()
 
+export default function GoogleLogin(onPress) {
   return (
     <Button
       w="45%"
@@ -18,7 +17,7 @@ export default function GoogleLogin() {
       rounded="lg"
       borderColor="gray.100"
       _text={{ fontSize: 'md', fontWeight: 'semibold', color: 'black' }}
-      onPress={googleLogin}
+      onPress={onPress}
     >
       <HStack w="100%" space={1} justifyContent="center" alignItems="center">
         <Image

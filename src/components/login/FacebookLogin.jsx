@@ -1,12 +1,11 @@
+import * as WebBrowser from 'expo-web-browser'
+import { Button, HStack, Text } from 'native-base'
 import React from 'react'
 import { Image, StyleSheet } from 'react-native'
-import { Button, HStack, Text } from 'native-base'
 
-export default function FacebookLogin() {
-  const facebookLogin = () => {
-    console.log('Login con facebook')
-  }
+WebBrowser.maybeCompleteAuthSession()
 
+export default function FacebookLogin(onPress) {
   return (
     <Button
       w="45%"
@@ -17,7 +16,7 @@ export default function FacebookLogin() {
       rounded="lg"
       colorScheme="darkBlue"
       _text={{ fontSize: 'md', fontWeight: 'semibold', color: 'white' }}
-      onPress={facebookLogin}
+      onPress={onPress}
     >
       <HStack w="100%" space={1} justifyContent="center" alignItems="center">
         <Image
