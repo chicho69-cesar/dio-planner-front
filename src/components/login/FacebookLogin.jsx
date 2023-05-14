@@ -5,7 +5,7 @@ import { Image, StyleSheet } from 'react-native'
 
 WebBrowser.maybeCompleteAuthSession()
 
-export default function FacebookLogin(onPress) {
+export default function FacebookLogin({ onPress }) {
   return (
     <Button
       w="45%"

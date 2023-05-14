@@ -1,8 +1,16 @@
-import React, { useState } from 'react'
-import { StatusBar } from 'expo-status-bar'
+import {
+  ANDROID_CLIENT_ID,
+  CLIENT_ID,
+  EXPO_CLIENT_ID,
+  IOS_CLIENT_ID,
+  WEB_CLIENT_ID
+} from '@env'
+
+import { MaterialIcons } from '@expo/vector-icons'
+import * as Facebook from 'expo-auth-session/providers/facebook'
+import * as Google from 'expo-auth-session/providers/google'
 import {
   Button,
-  Checkbox,
   HStack,
   Icon,
   Input,
@@ -10,21 +18,42 @@ import {
   Stack,
   Text
 } from 'native-base'
-import { MaterialIcons } from '@expo/vector-icons'
+import React, { useState } from 'react'
+import { useMutation } from 'react-query'
 import { useRecoilState } from 'recoil'
 
-import { errorsState, formDataState } from '../providers/login-state'
-import Logo from '../components/Logo'
+import {
+  facebookLoginOrRegisterUser,
+  googleLoginOrRegisterUser,
+  loginUser
+} from '../api/user'
+import Error from '../components/Error'
 import FormElement from '../components/FormElement'
-import FormValidation from '../components/FormValidation'
+import Loading from '../components/Loading'
+import Logo from '../components/Logo'
 import FacebookLogin from '../components/login/FacebookLogin'
 import GoogleLogin from '../components/login/GoogleLogin'
+import { useAuth } from '../hooks/useAuth'
+import { errorsState, formDataState } from '../providers/login-state'
+import { loginValidationSchema } from '../validations/login-validations'
 
 export default function LoginScreen({ navigation }) {
-  const [formData, setFormData] = useRecoilState(formDataState)
-  const [_, setErrors] = useRecoilState(errorsState)
+  const { login } = useAuth()
 
+  const [formData, setFormData] = useRecoilState(formDataState)
+  const [theErrors, setTheErrors] = useRecoilState(errorsState)
   const [showPassword, setShowPassword] = useState(false)
+
+  const [, , googlePromptAsync] = Google.useAuthRequest({
+    expoClientId: EXPO_CLIENT_ID,
+    iosClientId: IOS_CLIENT_ID,
+    androidClientId: ANDROID_CLIENT_ID,
+    webClientId: WEB_CLIENT_ID
+  })
+
+  const [, , fbPromptAsync] = Facebook.useAuthRequest({
+    clientId: CLIENT_ID
+  })
 
   const onChangeEmail = (text) => {
     setFormData({
@@ -40,25 +69,103 @@ export default function LoginScreen({ navigation }) {
     })
   }
 
-  const onChangeRemember = (isSelected) => {
-    setFormData({
-      ...formData,
-      remember: isSelected
-    })
+  const nativeLogin = useMutation(async (values) => {
+    const user = await loginUser(values.email, values.password)
+
+    if (user) {
+      login(user)
+      navigation.navigate('Home')
+    } else {
+      setTheErrors({
+        error: true,
+        message: 'Email o password incorrectos'
+      })
+    }
+  })
+
+  const facebookLogin = useMutation(async () => {
+    const response = await fbPromptAsync()
+
+    if (response.type === 'success') {
+      const { access_token } = response.params
+
+      const user = await facebookLoginOrRegisterUser(access_token)
+
+      if (user) {
+        login(user)
+        navigation.navigate('Home')
+      } else {
+        setTheErrors({
+          error: true,
+          message: 'Login con facebook incorrecto'
+        })
+      }
+    }
+  })
+
+  const googleLogin = useMutation(async () => {
+    const response = await googlePromptAsync()
+
+    if (response.type === 'success') {
+      const { access_token } = response.params
+
+      const user = await googleLoginOrRegisterUser(access_token)
+
+      if (user) {
+        login(user)
+        navigation.navigate('Home')
+      } else {
+        setTheErrors({
+          error: true,
+          message: 'Login con google incorrecto'
+        })
+      }
+    }
+  })
+
+  const validate = async (data) => {
+    try {
+      await loginValidationSchema.validate({
+        email: data.email,
+        password: data.password
+      })
+
+      setTheErrors({
+        error: false,
+        message: ''
+      })
+    } catch (err) {
+      const { errors } = err
+      setTheErrors({
+        error: true,
+        message: errors[0]
+      })
+    }
   }
 
-  const validate = () => {
-    console.log('Validaciones')
-  }
-
-  const onSubmit = () => {
+  const onSubmit = async () => {
     console.log({ formData })
+
+    await validate(formData)
+
+    if (theErrors.error) {
+      nativeLogin.mutate({
+        email: formData.email,
+        password: formData.password
+      })
+    }
+  }
+
+  if (
+    nativeLogin.isLoading ||
+    facebookLogin.isLoading ||
+    googleLogin.isLoading
+  ) {
+    return <Loading />
   }
 
   return (
     <>
-      <StatusBar style="dark" />
-
       <Stack
         w="100%"
         h="100%"
@@ -79,8 +186,6 @@ export default function LoginScreen({ navigation }) {
             p="3"
             focusOutlineColor="gray.800"
           />
-
-          <FormValidation to="email" />
         </FormElement>
 
         <FormElement to="password" isRequired={true} mb={2}>
@@ -109,23 +214,9 @@ export default function LoginScreen({ navigation }) {
               </Pressable>
             }
           />
-
-          <FormValidation to="password" />
         </FormElement>
 
-        <FormElement mb={2}>
-          <Checkbox
-            value="remember"
-            my="3"
-            colorScheme="amber"
-            w="100%"
-            alignItems="start"
-            onChange={onChangeRemember}
-            _text={{ color: 'black' }}
-          >
-            Recuérdeme
-          </Checkbox>
-        </FormElement>
+        {theErrors.error && <Error error={theErrors.message} />}
 
         <Button
           bg="amber.400"
@@ -137,6 +228,7 @@ export default function LoginScreen({ navigation }) {
           px={10}
           py={2}
           shadow={2}
+          mt={6}
           mb={6}
           w="75%"
           _text={{ color: 'white', fontSize: 'lg', fontWeight: 'semibold' }}
@@ -155,8 +247,8 @@ export default function LoginScreen({ navigation }) {
         </Pressable>
 
         <HStack w="75%" space={3} justifyContent="center">
-          <FacebookLogin />
-          <GoogleLogin />
+          <FacebookLogin onPress={() => facebookLogin.mutate()} />
+          <GoogleLogin onPress={() => googleLogin.mutate()} />
         </HStack>
       </Stack>
     </>

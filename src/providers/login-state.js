@@ -7,5 +7,8 @@ export const formDataState = atom({
 
 export const errorsState = atom({
   key: 'errorsState',
-  default: {}
+  default: {
+    error: false,
+    message: ''
+  }
 })

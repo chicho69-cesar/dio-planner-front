@@ -1,1 +1,1 @@
-export const serverLink = 'http://192.168.0.108:4000'
+export const serverLink = 'http://10.0.0.8:4000'

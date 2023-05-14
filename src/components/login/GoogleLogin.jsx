@@ -5,7 +5,7 @@ import { Image, StyleSheet } from 'react-native'
 
 WebBrowser.maybeCompleteAuthSession()
 
-export default function GoogleLogin(onPress) {
+export default function GoogleLogin({ onPress }) {
   return (
     <Button
       w="45%"
