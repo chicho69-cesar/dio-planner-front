@@ -29,6 +29,7 @@ import PurchasesAndExpensesScreen from '../screens/PurchasesAndExpensesScreen'
 import RegisterScreen from '../screens/RegisterScreen'
 import SearchScreen from '../screens/SearchScreen'
 import ShareMemoryScreen from '../screens/ShareMemoryScreen'
+import SplashScreen from '../screens/SplashScreen'
 import TodoListScreen from '../screens/TodoListScreen'
 
 const Stack = createStackNavigator()
@@ -36,7 +37,13 @@ const Stack = createStackNavigator()
 export default function Router() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login" screenOptions={headerStyles}>
+      <Stack.Navigator initialRouteName="Splash" screenOptions={headerStyles}>
+        <Stack.Screen
+          name="Splash"
+          component={SplashScreen}
+          options={{ headerShown: false }}
+        />
+
         <Stack.Screen
           name="Login"
           component={LoginScreen}

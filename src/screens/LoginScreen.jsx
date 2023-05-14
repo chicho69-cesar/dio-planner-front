@@ -148,7 +148,7 @@ export default function LoginScreen({ navigation }) {
 
     await validate(formData)
 
-    if (theErrors.error) {
+    if (!theErrors.error) {
       nativeLogin.mutate({
         email: formData.email,
         password: formData.password

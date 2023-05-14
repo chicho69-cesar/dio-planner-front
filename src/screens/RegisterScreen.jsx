@@ -1,25 +1,23 @@
-import React, { useState } from 'react'
-import { StatusBar } from 'expo-status-bar'
-import {
-  Stack,
-  Input,
-  Pressable,
-  Icon,
-  Checkbox,
-  Button,
-  Text
-} from 'native-base'
 import { MaterialIcons } from '@expo/vector-icons'
+import { Button, Icon, Input, Pressable, Stack, Text } from 'native-base'
+import React, { useState } from 'react'
+import { useMutation } from 'react-query'
 import { useRecoilState } from 'recoil'
 
-import { errorsState, formDataState } from '../providers/login-state'
-import Logo from '../components/Logo'
+import { registerUser } from '../api/user'
+import Error from '../components/Error'
 import FormElement from '../components/FormElement'
-import FormValidation from '../components/FormValidation'
+import Loading from '../components/Loading'
+import Logo from '../components/Logo'
+import { useAuth } from '../hooks/useAuth'
+import { errorsState, formDataState } from '../providers/login-state'
+import { registerValidationSchema } from '../validations/register-validations'
 
 export default function RegisterScreen({ navigation }) {
+  const { login } = useAuth()
+
   const [formData, setFormData] = useRecoilState(formDataState)
-  const [_, setErrors] = useRecoilState(errorsState)
+  const [theErrors, setTheErrors] = useRecoilState(errorsState)
 
   const [showPassword, setShowPassword] = useState(false)
   const [showRetypePassword, setShowRetypePassword] = useState(false)
@@ -52,25 +50,61 @@ export default function RegisterScreen({ navigation }) {
     })
   }
 
-  const onChangeTerms = (isSelected) => {
-    setFormData({
-      ...formData,
-      terms: isSelected
-    })
+  const nativeRegister = useMutation(async (values) => {
+    const user = await registerUser(values.name, values.email, values.password)
+
+    if (user) {
+      login(user)
+      navigation.navigate('Home')
+    } else {
+      setTheErrors({
+        error: true,
+        message: 'Email o password incorrectos'
+      })
+    }
+  })
+
+  const validate = async (data) => {
+    try {
+      await registerValidationSchema.validate({
+        email: data.email,
+        password: data.password,
+        confirmPassword: data.retype
+      })
+
+      setTheErrors({
+        error: false,
+        message: ''
+      })
+    } catch (err) {
+      const { errors } = err
+      setTheErrors({
+        error: true,
+        message: errors[0]
+      })
+    }
   }
 
-  const validate = () => {
-    console.log('Validaciones')
-  }
-
-  const onSubmit = () => {
+  const onSubmit = async () => {
     console.log({ formData })
+
+    await validate(formData)
+
+    if (!theErrors.error) {
+      nativeRegister.mutate({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      })
+    }
+  }
+
+  if (nativeRegister.isLoading) {
+    return <Loading />
   }
 
   return (
     <>
-      <StatusBar style="light" />
-
       <Stack
         w="100%"
         h="100%"
@@ -91,8 +125,6 @@ export default function RegisterScreen({ navigation }) {
             p="3"
             focusOutlineColor="gray.800"
           />
-
-          <FormValidation to="name" />
         </FormElement>
 
         <FormElement to="email" isRequired={true}>
@@ -106,8 +138,6 @@ export default function RegisterScreen({ navigation }) {
             p="3"
             focusOutlineColor="gray.800"
           />
-
-          <FormValidation to="email" />
         </FormElement>
 
         <FormElement to="password" isRequired={true}>
@@ -136,8 +166,6 @@ export default function RegisterScreen({ navigation }) {
               </Pressable>
             }
           />
-
-          <FormValidation to="password" />
         </FormElement>
 
         <FormElement to="retype" isRequired={true} mb={2}>
@@ -170,23 +198,9 @@ export default function RegisterScreen({ navigation }) {
               </Pressable>
             }
           />
-
-          <FormValidation to="retype" />
         </FormElement>
 
-        <FormElement mb={2}>
-          <Checkbox
-            value="accept"
-            my="3"
-            colorScheme="amber"
-            w="100%"
-            alignItems="start"
-            onChange={onChangeTerms}
-            _text={{ color: 'black' }}
-          >
-            Aceptar términos y condiciones
-          </Checkbox>
-        </FormElement>
+        {theErrors.error && <Error error={theErrors.message} />}
 
         <Button
           bg="amber.400"
@@ -198,6 +212,7 @@ export default function RegisterScreen({ navigation }) {
           px={10}
           py={2}
           shadow={2}
+          mt={4}
           mb={4}
           w="75%"
           _text={{ color: 'white', fontSize: 'lg', fontWeight: 'semibold' }}

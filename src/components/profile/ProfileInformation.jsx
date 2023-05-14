@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import {
   AspectRatio,
@@ -12,25 +12,18 @@ import {
   Text,
   VStack
 } from 'native-base'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import React from 'react'
+
+import { useAuth } from '../../hooks/useAuth.js'
 
 export default function ProfileInformation({ nOfEvents }) {
   const navigation = useNavigation()
-
-  const [profileInfo] = useState({
-    id: '111',
-    name: 'Cesar Villalobos Olmos',
-    email: 'cesarvillalobosolmos.01@gmail.com',
-    description:
-      'Officia minim consequat officia do enim exercitation excepteur in incididunt incididunt pariatur ut ea velit.',
-    picture:
-      'https://i.pinimg.com/originals/2c/4c/67/2c4c67f144c8ed1600be38d06d8d1765.jpg'
-  })
+  const { user, logout } = useAuth()
 
   return (
     <Box w="100%">
       <HStack w="100%" px={1} pt={3} space={3} justifyContent="space-between">
-        <VStack justifyContent="center" alignItems="center">
+        <VStack justifyContent="center" alignItems="center" w="30%">
           <AspectRatio
             ratio={{
               base: 1 / 1,
@@ -44,9 +37,9 @@ export default function ProfileInformation({ nOfEvents }) {
             <Image
               rounded="full"
               resizeMode="cover"
-              alt={profileInfo.name}
+              alt={user?.name}
               source={{
-                uri: profileInfo.picture
+                uri: user?.picture
               }}
             />
           </AspectRatio>
@@ -68,24 +61,24 @@ export default function ProfileInformation({ nOfEvents }) {
           </Link>
         </VStack>
 
-        <VStack justifyContent="center" alignItems="flex-start">
-          <Text fontSize="lg" fontWeight="bold" color="black">
-            {profileInfo.name}
+        <VStack justifyContent="center" alignItems="flex-start" w="60%">
+          <Text fontSize="lg" fontWeight="bold" color="black" w="100%">
+            {user?.name}
           </Text>
 
-          <Text fontSize="sm" color="coolGray.900" isTruncated>
-            {profileInfo.email}
+          <Text fontSize="sm" color="coolGray.900" isTruncated w="100%">
+            {user?.email ?? ''}
           </Text>
 
-          <Text numberOfLines={3} color="coolGray.700" fontSize="sm" w="32%">
-            {profileInfo.description}
+          <Text color="coolGray.700" fontSize="sm" w="100%">
+            {user?.description ?? ''}
           </Text>
 
           <HStack
             mt={2}
             justifyContent="space-between"
             alignContent="center"
-            w="30%"
+            w="100%"
           >
             <Text color="black" fontSize="lg">
               {nOfEvents} eventos
@@ -105,6 +98,32 @@ export default function ProfileInformation({ nOfEvents }) {
               />
             </Pressable>
           </HStack>
+
+          <Pressable
+            w="100%"
+            mt={4}
+            bg="red.700"
+            py={2}
+            px={6}
+            rounded="lg"
+            onPress={() => {
+              logout()
+              navigation.navigate('Login')
+            }}
+          >
+            <HStack w="100%" justifyContent="space-between" alignItems="center">
+              <Icon
+                as={<MaterialCommunityIcons name="power" />}
+                size={6}
+                fontWeight="bold"
+                color="white"
+              />
+
+              <Text fontSize="lg" color="white" fontWeight="bold">
+                Logout
+              </Text>
+            </HStack>
+          </Pressable>
         </VStack>
       </HStack>
 
