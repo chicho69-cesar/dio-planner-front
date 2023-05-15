@@ -12,15 +12,36 @@ import {
   View
 } from 'native-base'
 import React, { useState } from 'react'
+import { useMutation } from 'react-query'
+import { useRecoilState } from 'recoil'
+
+import { shareMemory as shareMemoryApi } from '../api/memory'
 import BottomNavigationBar from '../components/BottomNavigationBar'
+import { selectedEventState } from '../providers/event-state'
 import { uploadImage } from '../utilities/uploadImage'
 
 export default function ShareMemoryScreen({ navigation, route }) {
+  const [selectedEvent] = useRecoilState(selectedEventState)
+
   const [image, setImage] = useState(null)
   const [imageFileName, setImageFileName] = useState(null)
   const [description, setDescription] = useState('')
   const [errorUpload, setErrorUpload] = useState(false)
   const [isUpload, setIsUpload] = useState(false)
+
+  const shareMemoryMut = useMutation(async (values) => {
+    const memory = await shareMemoryApi(
+      values.title,
+      values.picture,
+      values.eventID
+    )
+
+    if (memory) {
+      setErrorUpload(false)
+    } else {
+      setErrorUpload(true)
+    }
+  })
 
   const onChangeDescription = (text) => {
     setDescription(text)
@@ -48,12 +69,22 @@ export default function ShareMemoryScreen({ navigation, route }) {
     const type = 'image/jpeg'
     const name = imageFileName || 'image.jpg'
 
-    setErrorUpload(await uploadImage(uri, type, name))
+    const response = await uploadImage(uri, type, name)
     setIsUpload(true)
+
+    if (response) {
+      shareMemoryMut.mutate({
+        title: description,
+        picture: response,
+        eventID: selectedEvent.id
+      })
+    } else {
+      setErrorUpload(true)
+    }
   }
 
   const goBack = () => {
-    navigation.goBack()
+    navigation.navigate('Event')
   }
 
   return (
