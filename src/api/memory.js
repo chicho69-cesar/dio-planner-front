@@ -21,6 +21,24 @@ export const getMemories = async (eventID, page) => {
   }
 }
 
+export const getAllMemories = async (eventID) => {
+  try {
+    const { data } = await axios.get(
+      `${memoryEndpoints.getMemories}/${eventID}`
+    )
+
+    if (data) {
+      console.log(data)
+      return data
+    }
+
+    return null
+  } catch (error) {
+    handleError(error)
+    return null
+  }
+}
+
 export const shareMemory = async (title, picture, eventID) => {
   try {
     const { data } = await axios.post(memoryEndpoints.shareMemory, {

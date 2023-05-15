@@ -32,6 +32,7 @@ export default function HomeScreen({ navigation, route }) {
           }
         })
       ])
+
       setIsLoading(false)
     }
   }
