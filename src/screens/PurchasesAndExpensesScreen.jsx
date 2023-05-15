@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 import {
   Button,
   FormControl,
@@ -6,20 +5,49 @@ import {
   Heading,
   Input,
   ScrollView,
+  Spinner,
   Stack,
   Text
 } from 'native-base'
+import React, { useEffect, useState } from 'react'
+import { useMutation } from 'react-query'
+import { useRecoilState } from 'recoil'
+
+import * as PurchasesEndpoints from '../api/purchase'
 import BottomNavigationBar from '../components/BottomNavigationBar'
 import Budget from '../components/Budget'
 import Purchase from '../components/purchase/Purchase'
+import { selectedEventState } from '../providers/event-state'
 
 export default function PurchasesAndExpensesScreen({ navigation, route }) {
+  const [selectedEvent] = useRecoilState(selectedEventState)
+
+  const [isLoading, setIsLoading] = useState(true)
   const [budget, setBudget] = useState(0)
   const [purchases, setPurchases] = useState([])
   const [title, setTitle] = useState('')
   const [price, setPrice] = useState('')
   const [edit, setEdit] = useState(false)
   const [editPurchase, setEditPurchase] = useState({})
+
+  const getPurchasesFunc = async (eventID) => {
+    const response = await PurchasesEndpoints.getPurchases(eventID)
+
+    if (response) {
+      setPurchases([
+        ...response.map((purchase) => {
+          return {
+            id: purchase.id,
+            title: purchase.title,
+            price: purchase.price,
+            eventID: purchase.eventID
+          }
+        })
+      ])
+
+      setIsLoading(false)
+    }
+  }
 
   useEffect(() => {
     if (purchases.length === 0) {
@@ -33,6 +61,10 @@ export default function PurchasesAndExpensesScreen({ navigation, route }) {
     }
   }, [purchases])
 
+  useEffect(() => {
+    getPurchasesFunc(selectedEvent.id)
+  }, [selectedEvent])
+
   const onHandleChangeTitle = (text) => {
     setTitle(text)
   }
@@ -40,6 +72,70 @@ export default function PurchasesAndExpensesScreen({ navigation, route }) {
   const onHandleChangePrice = (text) => {
     setPrice(text.replace(/[^0-9]/g, ''))
   }
+
+  const addPurchaseMut = useMutation(async (values) => {
+    const purchase = await PurchasesEndpoints.addPurchase(
+      values.title,
+      values.price,
+      values.eventID
+    )
+
+    if (purchase) {
+      console.log(purchase)
+      setPurchases([
+        {
+          id: purchase.id,
+          title: purchase.title,
+          price: purchase.price,
+          eventID: purchase.eventID
+        },
+        ...purchases
+      ])
+
+      setIsLoading(false)
+    } else {
+      console.error('Error al agregar la compra')
+    }
+  })
+
+  const updatePurchaseMut = useMutation(async (values) => {
+    const purchaseUpdated = await PurchasesEndpoints.updatePurchase(
+      values.id,
+      values.title,
+      values.price
+    )
+
+    if (purchaseUpdated) {
+      console.log(purchaseUpdated)
+      setPurchases(
+        purchases.map((purchase) => {
+          if (purchase.id === values.id) {
+            return {
+              id: purchaseUpdated.id,
+              title: purchaseUpdated.title,
+              price: purchaseUpdated.price,
+              eventID: purchaseUpdated.eventID
+            }
+          }
+
+          return purchase
+        })
+      )
+
+      setIsLoading(false)
+    } else {
+      console.error('Error al actualizar la compra')
+    }
+  })
+
+  const deletePurchaseMut = useMutation(async (values) => {
+    const isDeleted = await PurchasesEndpoints.deletePurchase(values.id)
+
+    if (isDeleted) {
+      console.log(isDeleted)
+      setPurchases(purchases.filter((purchase) => purchase.id !== values.id))
+    }
+  })
 
   const onHandleEdit = (id) => {
     let editedPurchase = purchases.find((purchase) => purchase.id === id)
@@ -51,30 +147,23 @@ export default function PurchasesAndExpensesScreen({ navigation, route }) {
   }
 
   const onHandleDelete = (id) => {
-    setPurchases(purchases.filter((purchase) => purchase.id !== id))
+    deletePurchaseMut.mutate({ id: id })
   }
 
   const onAddPurchase = () => {
-    setPurchases([
-      ...purchases,
-      { id: purchases.length, title: title, price: +price }
-    ])
+    addPurchaseMut.mutate({
+      title: title,
+      price: Number(price),
+      eventID: selectedEvent.id
+    })
   }
 
   const onUpdatePurchase = () => {
-    setPurchases(
-      purchases.map((purchase) => {
-        if (purchase.id === editPurchase.id) {
-          return {
-            ...purchase,
-            title: title,
-            price: +price
-          }
-        }
-
-        return purchase
-      })
-    )
+    updatePurchaseMut.mutate({
+      id: editPurchase.id,
+      title: title,
+      price: Number(price)
+    })
   }
 
   const onSubmit = () => {
@@ -82,6 +171,7 @@ export default function PurchasesAndExpensesScreen({ navigation, route }) {
       return
     }
 
+    setIsLoading(true)
     edit ? onUpdatePurchase() : onAddPurchase()
 
     setEdit(false)
@@ -159,14 +249,20 @@ export default function PurchasesAndExpensesScreen({ navigation, route }) {
             </Heading>
           )}
 
-          {purchases.map((purchase) => (
-            <Purchase
-              key={purchase.id}
-              purchase={purchase}
-              onEdit={onHandleEdit}
-              onDelete={onHandleDelete}
-            />
-          ))}
+          {isLoading ? (
+            <HStack w="100%" justifyContent="center" mt={4}>
+              <Spinner size="lg" color="amber.500" />
+            </HStack>
+          ) : (
+            purchases.map((purchase) => (
+              <Purchase
+                key={purchase.id}
+                purchase={purchase}
+                onEdit={onHandleEdit}
+                onDelete={onHandleDelete}
+              />
+            ))
+          )}
         </ScrollView>
       </Stack>
 
