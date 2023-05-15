@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import DateTimePicker from '@react-native-community/datetimepicker'
 import {
   Button,
   FormControl,
@@ -8,14 +8,18 @@ import {
   Stack,
   TextArea
 } from 'native-base'
-import DateTimePicker from '@react-native-community/datetimepicker'
+import React, { useState } from 'react'
+import { useRecoilState } from 'recoil'
 
 import BottomNavigationBar from '../components/BottomNavigationBar'
 import ButtonAction from '../components/ButtonAction'
 import Todo from '../components/todo-list/Todo'
+import { selectedEventState } from '../providers/event-state'
 import { getPickedDate } from '../utilities/getTextDateES'
 
 export default function TodoListScreen({ navigation, route }) {
+  const [selectedEvent] = useRecoilState(selectedEventState)
+
   const [todos, setTodos] = useState([])
   const [todoText, setTodoText] = useState('')
   const [pickedDate, setPickedDate] = useState(new Date())
