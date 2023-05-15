@@ -5,12 +5,15 @@ import {
   HStack,
   Heading,
   ScrollView,
+  Spinner,
   Stack,
   TextArea
 } from 'native-base'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useMutation } from 'react-query'
 import { useRecoilState } from 'recoil'
 
+import * as TodoEndpoints from '../api/todo'
 import BottomNavigationBar from '../components/BottomNavigationBar'
 import ButtonAction from '../components/ButtonAction'
 import Todo from '../components/todo-list/Todo'
@@ -20,12 +23,37 @@ import { getPickedDate } from '../utilities/getTextDateES'
 export default function TodoListScreen({ navigation, route }) {
   const [selectedEvent] = useRecoilState(selectedEventState)
 
+  const [isLoading, setIsLoading] = useState(true)
   const [todos, setTodos] = useState([])
   const [todoText, setTodoText] = useState('')
   const [pickedDate, setPickedDate] = useState(new Date())
   const [showCalendar, setShowCalendar] = useState(false)
   const [edit, setEdit] = useState(false)
   const [editTodo, setEditTodo] = useState({})
+
+  const getTodosFunc = async (eventID) => {
+    const response = await TodoEndpoints.getTodos(eventID)
+
+    if (response) {
+      setTodos([
+        ...response.map((todo) => {
+          return {
+            id: todo.id,
+            text: todo.text,
+            date: new Date(todo.date),
+            complete: todo.complete,
+            eventID: todo.eventID
+          }
+        })
+      ])
+
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getTodosFunc(selectedEvent.id)
+  }, [selectedEvent])
 
   const onChangeTodo = (text) => {
     setTodoText(text)
@@ -38,16 +66,83 @@ export default function TodoListScreen({ navigation, route }) {
     }
   }
 
-  const onHandleComplete = (id) => {
-    setTodos(
-      todos.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, complete: !todo.complete }
-        } else {
-          return todo
-        }
-      })
+  const addTodoMut = useMutation(async (values) => {
+    const todo = await TodoEndpoints.addTodo(
+      values.text,
+      values.date,
+      values.complete,
+      values.eventID
     )
+
+    if (todo) {
+      console.log(todo)
+      setTodos([
+        {
+          id: todo.id,
+          text: todo.text,
+          date: new Date(todo.date),
+          complete: todo.complete,
+          eventID: todo.eventID
+        },
+        ...todos
+      ])
+
+      setIsLoading(false)
+    } else {
+      console.error('Error al agregar la tarea')
+    }
+  })
+
+  const updateTodoMut = useMutation(async (values) => {
+    const todoUpdated = await TodoEndpoints.updateTodo(
+      values.id,
+      values.text,
+      values.date,
+      values.complete
+    )
+
+    if (todoUpdated) {
+      console.log(todoUpdated)
+      setTodos(
+        todos.map((todo) => {
+          if (todo.id === values.id) {
+            return {
+              id: todoUpdated.id,
+              text: todoUpdated.text,
+              date: new Date(todoUpdated.date),
+              complete: todoUpdated.complete,
+              eventID: todoUpdated.eventID
+            }
+          }
+
+          return todo
+        })
+      )
+
+      setIsLoading(false)
+    } else {
+      console.error('Error al actualizar la tarea')
+    }
+  })
+
+  const deleteTodoMut = useMutation(async (values) => {
+    const isDeleted = await TodoEndpoints.deleteTodo(values.id)
+
+    if (isDeleted) {
+      console.log(isDeleted)
+      setTodos(todos.filter((todo) => todo.id !== values.id))
+    }
+  })
+
+  const onHandleComplete = (id) => {
+    const todoFounded = todos.find((todo) => todo.id === id)
+
+    updateTodoMut.mutate({
+      id: todoFounded.id,
+      text: todoFounded.text,
+      date: todoFounded.date,
+      complete: !todoFounded.complete
+    })
   }
 
   const onHandleEdit = (id) => {
@@ -60,31 +155,25 @@ export default function TodoListScreen({ navigation, route }) {
   }
 
   const onHandleDelete = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id))
+    deleteTodoMut.mutate({ id: id })
   }
 
   const addTodo = () => {
-    setTodos([
-      ...todos,
-      { id: todos.length, text: todoText, date: pickedDate, complete: false }
-    ])
+    addTodoMut.mutate({
+      text: todoText,
+      date: pickedDate,
+      complete: false,
+      eventID: selectedEvent.id
+    })
   }
 
   const updateTodo = () => {
-    setTodos(
-      todos.map((todo) => {
-        if (todo.id === editTodo.id) {
-          return {
-            id: todo.id,
-            text: todoText,
-            date: pickedDate,
-            complete: false
-          }
-        }
-
-        return todo
-      })
-    )
+    updateTodoMut.mutate({
+      id: editTodo.id,
+      text: todoText,
+      date: pickedDate,
+      complete: false
+    })
   }
 
   const onHandleSubmit = () => {
@@ -92,6 +181,7 @@ export default function TodoListScreen({ navigation, route }) {
       return
     }
 
+    setIsLoading(true)
     edit ? updateTodo() : addTodo()
 
     setEdit(false)
@@ -174,15 +264,21 @@ export default function TodoListScreen({ navigation, route }) {
             Lista de tareas
           </Heading>
 
-          {todos.map((todo) => (
-            <Todo
-              key={todo.id}
-              todo={todo}
-              onComplete={onHandleComplete}
-              onEdit={onHandleEdit}
-              onDelete={onHandleDelete}
-            />
-          ))}
+          {isLoading ? (
+            <HStack w="100%" justifyContent="center" mt={4}>
+              <Spinner size="lg" color="amber.500" />
+            </HStack>
+          ) : (
+            todos.map((todo) => (
+              <Todo
+                key={todo.id}
+                todo={todo}
+                onComplete={onHandleComplete}
+                onEdit={onHandleEdit}
+                onDelete={onHandleDelete}
+              />
+            ))
+          )}
         </ScrollView>
       </Stack>
 
