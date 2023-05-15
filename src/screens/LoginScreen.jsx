@@ -184,6 +184,7 @@ export default function LoginScreen({ navigation }) {
             onChangeText={onChangeEmail}
             variant="rounded"
             p="3"
+            keyboardType="email-address"
             focusOutlineColor="gray.800"
           />
         </FormElement>

@@ -136,6 +136,7 @@ export default function RegisterScreen({ navigation }) {
             onChangeText={onChangeEmail}
             variant="rounded"
             p="3"
+            keyboardType="email-address"
             focusOutlineColor="gray.800"
           />
         </FormElement>

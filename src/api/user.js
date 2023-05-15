@@ -19,6 +19,7 @@ export const registerUser = async (name, email, password) => {
     return null
   } catch (error) {
     handleError(error)
+    return null
   }
 }
 
@@ -37,6 +38,7 @@ export const loginUser = async (email, password) => {
     return null
   } catch (error) {
     handleError(error)
+    return null
   }
 }
 
@@ -54,6 +56,7 @@ export const facebookLoginOrRegisterUser = async (accessToken) => {
     return null
   } catch (error) {
     handleError(error)
+    return null
   }
 }
 
@@ -71,6 +74,7 @@ export const googleLoginOrRegisterUser = async (accessToken) => {
     return null
   } catch (error) {
     handleError(error)
+    return null
   }
 }
 
@@ -88,9 +92,27 @@ export const appleLoginOrRegisterUser = async (identityToken) => {
     return null
   } catch (error) {
     handleError(error)
+    return null
   }
 }
 
 export const updateUser = async (name, password, description, picture) => {
-  //
+  try {
+    const { data } = await axios.patch(userEndpoints.update, {
+      name,
+      password,
+      description,
+      picture
+    })
+
+    if (data) {
+      console.log(data)
+      return data
+    }
+
+    return null
+  } catch (error) {
+    handleError(error)
+    return null
+  }
 }
