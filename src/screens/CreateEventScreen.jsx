@@ -116,7 +116,8 @@ export default function CreateEventScreen({ navigation }) {
     const type = 'image/jpeg'
     const file = imageFileName || 'image.jpg'
 
-    setErrorUpload(await uploadImage(uri, type, file))
+    const response = await uploadImage(uri, type, file)
+    setErrorUpload(response.error)
   }
 
   const onCancel = () => {

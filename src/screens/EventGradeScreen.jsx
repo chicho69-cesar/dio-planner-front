@@ -1,26 +1,63 @@
-import React, { useEffect, useState } from 'react'
 import {
-  FormControl,
   Button,
+  FormControl,
   HStack,
   Heading,
   Icon,
   Pressable,
   ScrollView,
+  Spinner,
   Stack,
   TextArea
 } from 'native-base'
-import BottomNavigationBar from '../components/BottomNavigationBar'
+import React, { useEffect, useState } from 'react'
+import { useMutation } from 'react-query'
+import { useRecoilState } from 'recoil'
+
 import { MaterialIcons } from '@expo/vector-icons'
+import { addGrade, getGrades } from '../api/grade'
+import BottomNavigationBar from '../components/BottomNavigationBar'
+import CustomDivider from '../components/CustomDivider'
 import EventGrade from '../components/EventGrade'
 import Opinion from '../components/Opinion'
-import CustomDivider from '../components/CustomDivider'
+import { useAuth } from '../hooks/useAuth'
+import { selectedEventState } from '../providers/event-state'
 
 export default function EventGradeScreen({ navigation, route }) {
+  const { user } = useAuth()
+  const [selectedEvent] = useRecoilState(selectedEventState)
+
+  const [userId] = useState(user.ID)
+  const [isLoading, setIsLoading] = useState(true)
   const [opinions, setOpinions] = useState([])
   const [avgGrade, setAvgGrade] = useState(0)
   const [myGrade, setMyGrade] = useState(0)
   const [opinion, setOpinion] = useState('')
+
+  const getGradesFunc = async (eventID) => {
+    const response = await getGrades(eventID)
+
+    if (response) {
+      setOpinions([
+        ...response.map((grade) => {
+          return {
+            id: grade.id,
+            opinion: grade.opinion,
+            grade: grade.grade,
+            autor: grade.user,
+            eventID: grade.eventID,
+            userID: grade.userID
+          }
+        })
+      ])
+
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getGradesFunc(selectedEvent.id)
+  }, [selectedEvent])
 
   useEffect(() => {
     if (opinions.length === 0) {
@@ -43,16 +80,42 @@ export default function EventGradeScreen({ navigation, route }) {
     setOpinion(text)
   }
 
+  const addGradeMut = useMutation(async (values) => {
+    const grade = await addGrade(
+      values.opinion,
+      values.grade,
+      values.eventID,
+      values.userID
+    )
+
+    if (grade) {
+      console.log(grade)
+      setOpinions([
+        {
+          id: grade.id,
+          opinion: grade.opinion,
+          grade: grade.grade,
+          autor: grade.user,
+          eventID: grade.eventID,
+          userID: grade.userID
+        },
+        ...opinions
+      ])
+
+      setIsLoading(false)
+    } else {
+      console.error('Error al agregar la calificación')
+    }
+  })
+
   const onSubmit = () => {
-    setOpinions([
-      {
-        id: opinions.length,
-        grade: myGrade,
-        opinion: opinion,
-        autor: 'Cesar Villalobos'
-      },
-      ...opinions
-    ])
+    setIsLoading(true)
+    addGradeMut.mutate({
+      opinion: opinion,
+      grade: myGrade,
+      eventID: selectedEvent.id,
+      userID: userId
+    })
   }
 
   return (
@@ -120,11 +183,19 @@ export default function EventGradeScreen({ navigation, route }) {
             </Button>
           </HStack>
 
-          {opinions.length > 0 && <CustomDivider />}
+          {isLoading ? (
+            <HStack w="100%" justifyContent="center" mt={4}>
+              <Spinner size="lg" color="amber.500" />
+            </HStack>
+          ) : (
+            <>
+              {opinions.length > 0 && <CustomDivider />}
 
-          {opinions.map((op) => (
-            <Opinion key={op.id} opinion={op} />
-          ))}
+              {opinions.map((op) => (
+                <Opinion key={op.id} opinion={op} />
+              ))}
+            </>
+          )}
         </ScrollView>
       </Stack>
 
