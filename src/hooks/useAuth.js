@@ -14,16 +14,16 @@ export const useAuth = () => {
   const login = (userData) => {
     let stringUser = JSON.stringify(userData)
     setUser(userData)
+    setUserLogged(userData)
     SecureStore.setItemAsync('user', stringUser)
     queryClient.refetchQueries()
-    setUserLogged(userData)
   }
 
   const logout = () => {
     setUser(null)
+    setUserLogged({ ID: 1 })
     SecureStore.deleteItemAsync('user')
     queryClient.clear()
-    setUserLogged({ ID: 1 })
   }
 
   return { user, login, logout }
