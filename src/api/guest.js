@@ -23,11 +23,9 @@ export const addGuest = async (userID, eventID, status) => {
   }
 }
 
-export const searchGuests = async (name) => {
+export const searchTheGuests = async (name) => {
   try {
-    const { data } = await axios.get(guestEndpoints.searchGuests, {
-      name
-    })
+    const { data } = await axios.get(`${guestEndpoints.searchGuests}/${name}`)
 
     if (data) {
       console.log(data)

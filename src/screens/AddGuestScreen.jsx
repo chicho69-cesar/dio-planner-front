@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { Ionicons } from '@expo/vector-icons'
 import {
   Button,
   FormControl,
@@ -9,66 +9,57 @@ import {
   Stack,
   WarningOutlineIcon
 } from 'native-base'
-import { Ionicons } from '@expo/vector-icons'
+import React, { useState } from 'react'
+import { useRecoilState } from 'recoil'
 
+import { searchTheGuests } from '../api/guest'
 import BottomNavigationBar from '../components/BottomNavigationBar'
 import BasicTitle from '../components/add-guest/BasicTitle'
-import Searching from '../components/add-guest/Searching'
 import CompletedSearch from '../components/add-guest/CompletedSearch'
-
-const searchResults = [
-  {
-    id: 1,
-    name: 'Hector Felipe',
-    picture:
-      'https://i.pinimg.com/originals/2c/4c/67/2c4c67f144c8ed1600be38d06d8d1765.jpg',
-    status: 'Aceptada'
-  },
-  {
-    id: 2,
-    name: 'Luis Angel',
-    picture:
-      'https://i.pinimg.com/originals/2c/4c/67/2c4c67f144c8ed1600be38d06d8d1765.jpg',
-    status: 'Pendiente'
-  },
-  {
-    id: 3,
-    name: 'Manuel Alejandro',
-    picture:
-      'https://i.pinimg.com/originals/2c/4c/67/2c4c67f144c8ed1600be38d06d8d1765.jpg',
-    status: 'Aceptada'
-  },
-  {
-    id: 4,
-    name: 'Yulissa Thaily',
-    picture:
-      'https://i.pinimg.com/originals/2c/4c/67/2c4c67f144c8ed1600be38d06d8d1765.jpg',
-    status: 'Pendiente'
-  },
-  {
-    id: 5,
-    name: 'Aranzazu Jimena',
-    picture:
-      'https://i.pinimg.com/originals/2c/4c/67/2c4c67f144c8ed1600be38d06d8d1765.jpg',
-    status: 'Cancelada'
-  }
-]
+import Searching from '../components/add-guest/Searching'
+import { userLoggedState } from '../providers/user-state'
 
 export default function AddGuestScreen({ navigation, route }) {
+  const [userLogged] = useRecoilState(userLoggedState)
+
+  const [userId] = useState(userLogged.ID)
   const [state, setState] = useState('basic') // basic | searching | completed
   const [search, setSearch] = useState('')
-  const [results, setResults] = useState(searchResults)
+  const [results, setResults] = useState([])
+
+  const doSearch = async (name) => {
+    const response = await searchTheGuests(name)
+
+    if (response) {
+      console.log(response)
+      setResults([
+        ...response.filter((result) => {
+          if (result.id === userId) {
+            return null
+          }
+
+          return {
+            id: result.id,
+            name: result.name,
+            description: result.description,
+            picture: result.picture
+          }
+        })
+      ])
+
+      setState('completed')
+    } else {
+      console.error('ERROR AL BUSCAR')
+    }
+  }
 
   const onSearchHandle = (text) => {
     setSearch(text)
   }
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     setState('searching')
-
-    setTimeout(() => {
-      setState('completed')
-    }, 1000)
+    await doSearch(search)
   }
 
   return (
