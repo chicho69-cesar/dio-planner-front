@@ -1,20 +1,46 @@
-import React from 'react'
+import { useNavigation } from '@react-navigation/native'
 import {
-  Heading,
-  HStack,
-  Image,
   AspectRatio,
+  HStack,
+  Heading,
+  Image,
   Pressable,
   Text
 } from 'native-base'
-import { useNavigation } from '@react-navigation/native'
+import React from 'react'
+import { useMutation } from 'react-query'
+import { useRecoilState } from 'recoil'
+
+import { addGuest } from '../../api/guest'
+import { selectedEventState } from '../../providers/event-state'
+import Loading from '../Loading'
 
 export default function CompletedSearch({ results }) {
   const navigation = useNavigation()
+  const [selectedEvent] = useRecoilState(selectedEventState)
+
+  const addGuestMut = useMutation(async (values) => {
+    var response = await addGuest(values.userID, values.eventID, values.status)
+
+    if (response) {
+      console.log(response)
+    } else {
+      console.error('Error al invitar a la persona')
+    }
+  })
 
   const invite = (id) => {
-    console.log(id)
+    addGuestMut.mutate({
+      userID: id,
+      eventID: selectedEvent.id,
+      status: 'Pendiente'
+    })
+
     navigation.navigate('Event')
+  }
+
+  if (addGuestMut.isLoading) {
+    return <Loading />
   }
 
   return (
