@@ -20,14 +20,14 @@ import BottomNavigationBar from '../components/BottomNavigationBar'
 import CustomDivider from '../components/CustomDivider'
 import EventGrade from '../components/EventGrade'
 import Opinion from '../components/Opinion'
-import { useAuth } from '../hooks/useAuth'
 import { selectedEventState } from '../providers/event-state'
+import { userLoggedState } from '../providers/user-state'
 
 export default function EventGradeScreen({ navigation, route }) {
-  const { user } = useAuth()
+  const [userLogged] = useRecoilState(userLoggedState)
   const [selectedEvent] = useRecoilState(selectedEventState)
 
-  const [userId] = useState(user.ID)
+  const [userId] = useState(userLogged.ID)
   const [isLoading, setIsLoading] = useState(true)
   const [opinions, setOpinions] = useState([])
   const [avgGrade, setAvgGrade] = useState(0)
