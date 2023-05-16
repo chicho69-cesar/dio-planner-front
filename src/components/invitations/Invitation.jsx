@@ -1,21 +1,55 @@
-import React from 'react'
+import { useNavigation } from '@react-navigation/native'
 import {
-  VStack,
-  HStack,
-  Box,
-  Image,
   AspectRatio,
+  Box,
+  HStack,
   Heading,
-  Text
+  Image,
+  Text,
+  VStack
 } from 'native-base'
+import React from 'react'
+import { useMutation } from 'react-query'
+
+import { acceptInvitation, declineInvitation } from '../../api/guest'
 import { getPickedDate } from '../../utilities/getTextDateES'
 import CustomDivider from '../CustomDivider'
 import FormAction from '../FormAction'
 
 export default function Invitation({ event }) {
-  const onHandleAccept = (id) => {}
+  const navigation = useNavigation()
 
-  const onHandleReject = (id) => {}
+  const acceptInvitationMut = useMutation(async (values) => {
+    const isAccepted = await acceptInvitation(values.id)
+
+    if (isAccepted) {
+      console.log('Invitación aceptada')
+      navigation.push('Home')
+    } else {
+      console.error('Error al aceptar la invitación')
+      navigation.goBack()
+    }
+  })
+
+  const declineInvitationMut = useMutation(async (values) => {
+    const isDeclined = await declineInvitation(values.id)
+
+    if (isDeclined) {
+      console.log('Invitación rechazada')
+      navigation.push('Home')
+    } else {
+      console.error('Error al rechazar la invitación')
+      navigation.goBack()
+    }
+  })
+
+  const onHandleAccept = (id) => {
+    acceptInvitationMut.mutate({ id })
+  }
+
+  const onHandleReject = (id) => {
+    declineInvitationMut.mutate({ id })
+  }
 
   return (
     <VStack
