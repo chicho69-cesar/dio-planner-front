@@ -100,48 +100,58 @@ export default function EventScreen({ navigation, route }) {
             justifyContent="center"
             space={4}
           >
-            {cards.map((card) => (
-              <Pressable
-                w="90%"
-                rounded="md"
-                borderWidth={1}
-                borderColor="coolGray.400"
-                bg={card.color}
-                p={4}
-                key={card.id}
-                onPress={() => navigation.navigate(card.route)}
-              >
-                <HStack
-                  alignItems="center"
-                  justifyContent="space-between"
-                  w="100%"
+            {cards.map((card) => {
+              if (selectedEvent.accessibility && card.id === 5) {
+                return <></>
+              }
+
+              return (
+                <Pressable
+                  w="90%"
+                  rounded="md"
+                  borderWidth={1}
+                  borderColor="coolGray.400"
+                  bg={card.color}
+                  p={4}
+                  key={card.id}
+                  onPress={() => navigation.navigate(card.route)}
                 >
                   <HStack
-                    space={2}
                     alignItems="center"
-                    justifyContent="flex-start"
+                    justifyContent="space-between"
+                    w="100%"
                   >
+                    <HStack
+                      space={2}
+                      alignItems="center"
+                      justifyContent="flex-start"
+                    >
+                      <Icon
+                        as={<MaterialIcons name={card.icon} />}
+                        size={8}
+                        fontWeight="bold"
+                        color="coolGray.800"
+                      />
+
+                      <Text
+                        color="coolGray.800"
+                        fontSize="md"
+                        fontWeight="bold"
+                      >
+                        {card.title}
+                      </Text>
+                    </HStack>
+
                     <Icon
-                      as={<MaterialIcons name={card.icon} />}
+                      as={<MaterialIcons name="chevron-right" />}
                       size={8}
                       fontWeight="bold"
                       color="coolGray.800"
                     />
-
-                    <Text color="coolGray.800" fontSize="md" fontWeight="bold">
-                      {card.title}
-                    </Text>
                   </HStack>
-
-                  <Icon
-                    as={<MaterialIcons name="chevron-right" />}
-                    size={8}
-                    fontWeight="bold"
-                    color="coolGray.800"
-                  />
-                </HStack>
-              </Pressable>
-            ))}
+                </Pressable>
+              )
+            })}
           </VStack>
         </ScrollView>
       </Stack>

@@ -10,7 +10,9 @@ const user = '/user'
 
 export const eventEndpoints = {
   create: serverLink + event + '/create',
-  getUserEvents: serverLink + event + '/get-user-events'
+  getUserEvents: serverLink + event + '/get-user-events',
+  getTopEvents: serverLink + event + '/get-top-events',
+  getQueryEvents: serverLink + event + '/get-query-events'
 }
 
 export const gradeEndpoints = {

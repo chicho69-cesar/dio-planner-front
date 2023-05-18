@@ -25,7 +25,10 @@ export const addGuest = async (userID, eventID, status) => {
 
 export const searchTheGuests = async (name) => {
   try {
-    const { data } = await axios.get(`${guestEndpoints.searchGuests}/${name}`)
+    const queryString = new URLSearchParams({ query: name }).toString()
+    const { data } = await axios.get(
+      `${guestEndpoints.searchGuests}?${queryString}`
+    )
 
     if (data) {
       console.log(data)

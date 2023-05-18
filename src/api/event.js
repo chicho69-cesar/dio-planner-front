@@ -50,3 +50,41 @@ export const getUserEvents = async (userID) => {
     return null
   }
 }
+
+export const getTopEvents = async () => {
+  try {
+    const { data } = await axios.get(`${eventEndpoints.getTopEvents}`)
+
+    if (data) {
+      console.log(data)
+      return data
+    }
+
+    return null
+  } catch (error) {
+    handleError(error)
+    return null
+  }
+}
+
+export const getEventsByQuery = async (name, location) => {
+  try {
+    const queryString = new URLSearchParams({
+      name: name,
+      location: location
+    }).toString()
+    const { data } = await axios.get(
+      `${eventEndpoints.getQueryEvents}?${queryString}`
+    )
+
+    if (data) {
+      console.log(data)
+      return data
+    }
+
+    return null
+  } catch (error) {
+    handleError(error)
+    return null
+  }
+}

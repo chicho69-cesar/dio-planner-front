@@ -1,7 +1,7 @@
-import React from 'react'
-import { HStack, Icon, Pressable, Text, VStack } from 'native-base'
-import { useNavigation } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
+import { HStack, Icon, Pressable, Text, VStack } from 'native-base'
+import React from 'react'
 
 export default function BottomNavigationBar({ active }) {
   return (
@@ -27,10 +27,10 @@ export default function BottomNavigationBar({ active }) {
       />
 
       <NavBarElement
-        to="Chats"
-        active={active === 'Chats'}
-        text="Chats"
-        icon="chat-bubble-outline"
+        to="Tops"
+        active={active === 'Tops'}
+        text="Tops"
+        icon="stars"
       />
 
       <NavBarElement

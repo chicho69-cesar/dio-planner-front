@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
-import {
-  HStack,
-  Text,
-  Icon,
-  Input,
-  Button,
-  AspectRatio,
-  Image
-} from 'native-base'
 import { Ionicons } from '@expo/vector-icons'
-import { selectedEventState } from '../providers/event-state'
+import {
+  AspectRatio,
+  Button,
+  HStack,
+  Icon,
+  Image,
+  Input,
+  Text
+} from 'native-base'
+import React, { useState } from 'react'
 import { useRecoilState } from 'recoil'
+import { selectedEventState } from '../providers/event-state'
 
 export function HomeHeader() {
   return (
@@ -67,6 +67,18 @@ export function SearchHeader() {
           fontWeight="bold"
         />
       </Button>
+    </HStack>
+  )
+}
+
+export function TopsHeader() {
+  return (
+    <HStack w="100%" justifyContent="space-between" alignItems="center">
+      <Text fontSize="lg" fontWeight="bold" color="white">
+        Eventos top
+      </Text>
+
+      <HeaderLogo />
     </HStack>
   )
 }

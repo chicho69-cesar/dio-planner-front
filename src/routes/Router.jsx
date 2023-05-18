@@ -9,12 +9,11 @@ import {
   HomeHeader,
   InvitationsHeader,
   ProfileHeader,
-  SearchHeader
+  SearchHeader,
+  TopsHeader
 } from '../components/Headers'
 
 import AddGuestScreen from '../screens/AddGuestScreen'
-import ChatScreen from '../screens/ChatScreen'
-import ChatsScreen from '../screens/ChatsScreen'
 import CreateEventScreen from '../screens/CreateEventScreen'
 import EditInfoScreen from '../screens/EditInfoScreen'
 import EventGradeScreen from '../screens/EventGradeScreen'
@@ -31,6 +30,7 @@ import SearchScreen from '../screens/SearchScreen'
 import ShareMemoryScreen from '../screens/ShareMemoryScreen'
 import SplashScreen from '../screens/SplashScreen'
 import TodoListScreen from '../screens/TodoListScreen'
+import TopEventsScreen from '../screens/TopEventsScreen'
 
 const Stack = createStackNavigator()
 
@@ -80,15 +80,13 @@ export default function Router() {
         />
 
         <Stack.Screen
-          name="Chats"
-          component={ChatsScreen}
-          options={{ headerShown: false }}
-        />
-
-        <Stack.Screen
-          name="Chat"
-          component={ChatScreen}
-          options={{ headerShown: false }}
+          name="Tops"
+          component={TopEventsScreen}
+          options={({ navigation, route }) => ({
+            // eslint-disable-next-line react/no-unstable-nested-components
+            headerTitle: (props) => <TopsHeader />,
+            headerLeft: () => null
+          })}
         />
 
         <Stack.Screen
