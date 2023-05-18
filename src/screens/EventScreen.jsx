@@ -102,7 +102,7 @@ export default function EventScreen({ navigation, route }) {
           >
             {cards.map((card) => {
               if (selectedEvent.accessibility && card.id === 5) {
-                return <></>
+                return <HStack key={card.id} />
               }
 
               return (

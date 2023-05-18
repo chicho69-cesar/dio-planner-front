@@ -1,13 +1,17 @@
-import React from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { Column, Pressable, VStack, Image, Text } from 'native-base'
+import { Column, Image, Pressable, Text, VStack } from 'native-base'
+import React from 'react'
 import { StyleSheet } from 'react-native'
+import { useRecoilState } from 'recoil'
+import { selectedEventState } from '../../providers/event-state'
 
 export default function SearchResult({ item }) {
   const navigation = useNavigation()
+  const [, setSelectedEvent] = useRecoilState(selectedEventState)
 
-  const navigateToResult = (id) => {
-    console.log('Hola')
+  const navigateToResult = () => {
+    setSelectedEvent({ ...item })
+    navigation.navigate('Event')
   }
 
   return (

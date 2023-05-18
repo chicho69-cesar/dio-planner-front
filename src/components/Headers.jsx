@@ -8,9 +8,10 @@ import {
   Input,
   Text
 } from 'native-base'
-import React, { useState } from 'react'
+import React from 'react'
 import { useRecoilState } from 'recoil'
 import { selectedEventState } from '../providers/event-state'
+import { doSearchState, searchState } from '../providers/search-state'
 
 export function HomeHeader() {
   return (
@@ -25,14 +26,15 @@ export function HomeHeader() {
 }
 
 export function SearchHeader() {
-  const [textSearch, setTextSearch] = useState('')
+  const [, setTextSearch] = useRecoilState(searchState)
+  const [, setDoSearch] = useRecoilState(doSearchState)
 
   const handleWrite = (text) => {
     setTextSearch(text)
   }
 
   const handleSearch = () => {
-    console.log(textSearch)
+    setDoSearch(true)
   }
 
   return (

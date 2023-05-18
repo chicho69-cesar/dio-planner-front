@@ -1,17 +1,17 @@
-import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import {
-  Pressable,
+  AspectRatio,
   Box,
   HStack,
-  AspectRatio,
-  Image,
   Heading,
+  Image,
+  Pressable,
   Text
 } from 'native-base'
+import React from 'react'
 import { useRecoilState } from 'recoil'
-import { getPickedDate } from '../utilities/getTextDateES'
 import { selectedEventState } from '../providers/event-state'
+import { getPickedDate } from '../utilities/getTextDateES'
 
 export default function Event({ item }) {
   const navigation = useNavigation()
