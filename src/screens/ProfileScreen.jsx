@@ -30,6 +30,7 @@ export default function ProfileScreen({ navigation, route }) {
             description: event.description,
             img: event.img,
             location: event.location,
+            topic: event.topic,
             userID: event.user_id
           }
         })

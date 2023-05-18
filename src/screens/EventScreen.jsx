@@ -74,6 +74,15 @@ export default function EventScreen({ navigation, route }) {
           <HStack w="100%" justifyContent="center" my={2}>
             <Text fontSize="md" color="black" w="90%">
               <Heading size="sm" color="black">
+                Temática del evento:{' '}
+              </Heading>
+              {selectedEvent.topic}
+            </Text>
+          </HStack>
+
+          <HStack w="100%" justifyContent="center" my={2}>
+            <Text fontSize="md" color="black" w="90%">
+              <Heading size="sm" color="black">
                 Ubicación del evento:{' '}
               </Heading>
               {selectedEvent.location}

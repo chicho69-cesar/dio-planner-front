@@ -8,59 +8,6 @@ import LoadingResults from '../components/search/LoadingResults'
 import SearchResultsList from '../components/search/SearchResultsList'
 import { doSearchState, searchState } from '../providers/search-state'
 
-const images = [
-  {
-    id: 1,
-    name: 'Cesar uwu',
-    img: 'https://i.pinimg.com/564x/9c/a6/82/9ca682558293bc3976154e317091a9c9.jpg'
-  },
-  {
-    id: 2,
-    name: 'Cesar uwu',
-    img: 'https://i.pinimg.com/564x/9c/a6/82/9ca682558293bc3976154e317091a9c9.jpg'
-  },
-  {
-    id: 3,
-    name: 'Cesar uwu',
-    img: 'https://i.pinimg.com/564x/9c/a6/82/9ca682558293bc3976154e317091a9c9.jpg'
-  },
-  {
-    id: 4,
-    name: 'Cesar uwu',
-    img: 'https://i.pinimg.com/564x/9c/a6/82/9ca682558293bc3976154e317091a9c9.jpg'
-  },
-  {
-    id: 5,
-    name: 'Cesar uwu',
-    img: 'https://i.pinimg.com/564x/9c/a6/82/9ca682558293bc3976154e317091a9c9.jpg'
-  },
-  {
-    id: 6,
-    name: 'Cesar uwu',
-    img: 'https://i.pinimg.com/564x/9c/a6/82/9ca682558293bc3976154e317091a9c9.jpg'
-  },
-  {
-    id: 7,
-    name: 'Cesar uwu',
-    img: 'https://i.pinimg.com/564x/9c/a6/82/9ca682558293bc3976154e317091a9c9.jpg'
-  },
-  {
-    id: 8,
-    name: 'Cesar uwu',
-    img: 'https://i.pinimg.com/564x/9c/a6/82/9ca682558293bc3976154e317091a9c9.jpg'
-  },
-  {
-    id: 9,
-    name: 'Cesar uwu',
-    img: 'https://i.pinimg.com/564x/9c/a6/82/9ca682558293bc3976154e317091a9c9.jpg'
-  },
-  {
-    id: 10,
-    name: 'Cesar uwu',
-    img: 'https://i.pinimg.com/564x/9c/a6/82/9ca682558293bc3976154e317091a9c9.jpg'
-  }
-]
-
 export default function SearchScreen({ navigation, route }) {
   const [textSearch] = useRecoilState(searchState)
   const [doSearch, setDoSearch] = useRecoilState(doSearchState)
@@ -83,6 +30,7 @@ export default function SearchScreen({ navigation, route }) {
                 description: event.description,
                 img: event.img,
                 location: event.location,
+                topic: event.topic,
                 userID: event.user_id,
                 accessibility: event.accessibility
               }

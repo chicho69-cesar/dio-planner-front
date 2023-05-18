@@ -13,23 +13,30 @@ import {
   View
 } from 'native-base'
 import React, { useEffect, useState } from 'react'
+import { useMutation } from 'react-query'
 import { useRecoilState } from 'recoil'
 
+import { createEvent } from '../api/event'
 import BottomNavigationBar from '../components/BottomNavigationBar'
 import ButtonAction from '../components/ButtonAction'
+import Error from '../components/Error'
 import FormAction from '../components/FormAction'
 import FormWrapper from '../components/create-event/FormWrapper'
 import {
   createEventState,
   errorsCreateEventState
 } from '../providers/event-state'
+import { userLoggedState } from '../providers/user-state'
 import { getPickedDate } from '../utilities/getTextDateES'
 import { uploadImage } from '../utilities/uploadImage'
+import { createEventSchema } from '../validations/event-validations'
 
 export default function CreateEventScreen({ navigation }) {
+  const [userLogged] = useRecoilState(userLoggedState)
   const [errors, setErrors] = useRecoilState(errorsCreateEventState)
   const [data, setData] = useRecoilState(createEventState)
 
+  const [userId] = useState(userLogged.ID)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [topic, setTopic] = useState('fiesta')
@@ -39,7 +46,26 @@ export default function CreateEventScreen({ navigation }) {
   const [showCalendar, setShowCalendar] = useState(false)
   const [image, setImage] = useState(null)
   const [imageFileName, setImageFileName] = useState(null)
-  const [errorUpload, setErrorUpload] = useState(false)
+
+  const createEventMut = useMutation(async (values) => {
+    const event = await createEvent(
+      values.name,
+      values.date,
+      values.description,
+      values.img,
+      values.location,
+      values.topic,
+      values.accessibility,
+      values.userID
+    )
+
+    if (!event) {
+      setErrors({
+        error: true,
+        message: 'Error al crear el evento en la base de datos'
+      })
+    }
+  })
 
   useEffect(() => {
     setData({
@@ -47,7 +73,7 @@ export default function CreateEventScreen({ navigation }) {
       description: description,
       topic: topic,
       date: pickedDate,
-      accessibility: accessibilityValue,
+      accessibility: accessibilityValue === '1' ? 'publico' : 'privado',
       location: location
     })
   }, [
@@ -107,17 +133,63 @@ export default function CreateEventScreen({ navigation }) {
     }
   }
 
-  const validate = () => {
-    console.log('Validaciones')
+  const validate = async (eventData) => {
+    try {
+      await createEventSchema.validate({
+        name: eventData.name,
+        topic: eventData.topic,
+        location: eventData.location
+      })
+
+      setErrors({
+        error: false,
+        message: ''
+      })
+    } catch (err) {
+      setErrors({
+        error: true,
+        message: err.errors[0]
+      })
+    }
   }
 
   const onSubmit = async () => {
+    if (!image) {
+      setErrors({
+        error: true,
+        message: 'Imagen no seleccionada'
+      })
+    }
+
+    await validate(data)
+
     const uri = image
     const type = 'image/jpeg'
     const file = imageFileName || 'image.jpg'
 
-    const response = await uploadImage(uri, type, file)
-    setErrorUpload(response.error)
+    if (!errors.error) {
+      const response = await uploadImage(uri, type, file)
+
+      if (response) {
+        createEventMut.mutate({
+          name: data.name,
+          date: data.date,
+          description: data.description,
+          img: response,
+          location: data.location,
+          topic: data.topic,
+          accessibility: data.accessibility,
+          userID: userId
+        })
+
+        navigation.push('Home')
+      } else {
+        setErrors({
+          error: true,
+          message: 'Error al subir la imagen'
+        })
+      }
+    }
   }
 
   const onCancel = () => {
@@ -260,6 +332,8 @@ export default function CreateEventScreen({ navigation }) {
             icon="folder-image"
             onPress={pickImage}
           />
+
+          {errors.error && <Error error={errors.message} />}
 
           <View w="100%" alignItems="center" justifyContent="center" my="3">
             <HStack w="90%" justifyContent="space-between">

@@ -9,6 +9,8 @@ export const createEvent = async (
   description,
   img,
   location,
+  topic,
+  accessibility,
   user_id
 ) => {
   try {
@@ -18,6 +20,8 @@ export const createEvent = async (
       description,
       img,
       location,
+      topic,
+      accessibility,
       user_id
     })
 

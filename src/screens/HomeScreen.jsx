@@ -31,6 +31,7 @@ export default function HomeScreen({ navigation, route }) {
             description: event.description,
             img: event.img,
             location: event.location,
+            topic: event.topic,
             userID: event.user_id
           }
         })
