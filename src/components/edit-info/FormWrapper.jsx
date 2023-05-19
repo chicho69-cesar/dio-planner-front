@@ -2,10 +2,10 @@ import { FormControl } from 'native-base'
 import React from 'react'
 import { useRecoilState } from 'recoil'
 
-import { errorsCreateEventState } from '../../providers/event-state'
+import { errorsEditInfoState } from '../../providers/edit-info-state'
 
 export default function FormWrapper({ children, to, isRequired }) {
-  const [errors] = useRecoilState(errorsCreateEventState)
+  const [errors] = useRecoilState(errorsEditInfoState)
 
   return (
     <FormControl

@@ -96,11 +96,26 @@ export const appleLoginOrRegisterUser = async (identityToken) => {
   }
 }
 
-export const updateUser = async (name, password, description, picture) => {
+export const getUser = async (userID) => {
   try {
-    const { data } = await axios.patch(userEndpoints.update, {
+    const { data } = await axios.get(`${userEndpoints.get}/${userID}`)
+
+    if (data) {
+      console.log(data)
+      return data
+    }
+
+    return null
+  } catch (error) {
+    handleError(error)
+    return null
+  }
+}
+
+export const updateUser = async (name, description, picture, userID) => {
+  try {
+    const { data } = await axios.patch(`${userEndpoints.update}/${userID}`, {
       name,
-      password,
       description,
       picture
     })

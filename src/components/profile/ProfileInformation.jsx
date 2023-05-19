@@ -12,13 +12,42 @@ import {
   Text,
   VStack
 } from 'native-base'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useRecoilState } from 'recoil'
 
+import { getUser } from '../../api/user.js'
 import { useAuth } from '../../hooks/useAuth.js'
+import { userLoggedState } from '../../providers/user-state.js'
 
 export default function ProfileInformation({ nOfEvents }) {
   const navigation = useNavigation()
-  const { user, logout } = useAuth()
+  const { logout } = useAuth()
+
+  const [userLogged] = useRecoilState(userLoggedState)
+  const [userId] = useState(userLogged.ID)
+  const [userInfo, setUserInfo] = useState({
+    name: '',
+    description: '',
+    email: '',
+    picture: 'https://dio-planner.s3.us-east-2.amazonaws.com/no-image.jpg'
+  })
+
+  const getUserFunc = async (ID) => {
+    const response = await getUser(ID)
+
+    if (response) {
+      setUserInfo({
+        name: response.name,
+        description: response.description,
+        email: response.email,
+        picture: response.picture
+      })
+    }
+  }
+
+  useEffect(() => {
+    getUserFunc(userId)
+  }, [userId])
 
   return (
     <Box w="100%">
@@ -37,9 +66,9 @@ export default function ProfileInformation({ nOfEvents }) {
             <Image
               rounded="full"
               resizeMode="cover"
-              alt={user?.name}
+              alt={userInfo?.name}
               source={{
-                uri: user?.picture
+                uri: userInfo?.picture
               }}
             />
           </AspectRatio>
@@ -63,15 +92,15 @@ export default function ProfileInformation({ nOfEvents }) {
 
         <VStack justifyContent="center" alignItems="flex-start" w="60%">
           <Text fontSize="lg" fontWeight="bold" color="black" w="100%">
-            {user?.name}
+            {userInfo?.name}
           </Text>
 
           <Text fontSize="sm" color="coolGray.900" isTruncated w="100%">
-            {user?.email ?? ''}
+            {userInfo?.email ?? ''}
           </Text>
 
           <Text color="coolGray.700" fontSize="sm" w="100%">
-            {user?.description ?? ''}
+            {userInfo?.description ?? ''}
           </Text>
 
           <HStack

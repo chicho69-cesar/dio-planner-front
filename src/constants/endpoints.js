@@ -55,5 +55,6 @@ export const userEndpoints = {
   facebook: serverLink + user + '/facebook',
   google: serverLink + user + '/google',
   apple: serverLink + user + '/apple',
+  get: serverLink + user + '/get-user',
   update: serverLink + user + '/update'
 }
