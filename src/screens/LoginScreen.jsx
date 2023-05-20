@@ -42,6 +42,7 @@ export default function LoginScreen({ navigation }) {
 
   const [formData, setFormData] = useRecoilState(formDataState)
   const [theErrors, setTheErrors] = useRecoilState(errorsState)
+
   const [showPassword, setShowPassword] = useState(false)
 
   const [, , googlePromptAsync] = Google.useAuthRequest({

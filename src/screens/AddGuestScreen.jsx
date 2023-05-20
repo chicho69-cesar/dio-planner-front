@@ -19,7 +19,7 @@ import CompletedSearch from '../components/add-guest/CompletedSearch'
 import Searching from '../components/add-guest/Searching'
 import { userLoggedState } from '../providers/user-state'
 
-export default function AddGuestScreen({ navigation, route }) {
+export default function AddGuestScreen() {
   const [userLogged] = useRecoilState(userLoggedState)
 
   const [userId] = useState(userLogged.ID)

@@ -20,7 +20,7 @@ import Todo from '../components/todo-list/Todo'
 import { selectedEventState } from '../providers/event-state'
 import { getPickedDate } from '../utilities/getTextDateES'
 
-export default function TodoListScreen({ navigation, route }) {
+export default function TodoListScreen() {
   const [selectedEvent] = useRecoilState(selectedEventState)
 
   const [isLoading, setIsLoading] = useState(true)

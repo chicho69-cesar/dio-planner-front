@@ -20,7 +20,7 @@ import BottomNavigationBar from '../components/BottomNavigationBar'
 import { selectedEventState } from '../providers/event-state'
 import { uploadImage } from '../utilities/uploadImage'
 
-export default function ShareMemoryScreen({ navigation, route }) {
+export default function ShareMemoryScreen({ navigation }) {
   const [selectedEvent] = useRecoilState(selectedEventState)
 
   const [image, setImage] = useState(null)

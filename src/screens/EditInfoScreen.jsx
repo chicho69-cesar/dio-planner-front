@@ -13,9 +13,9 @@ import {
   View
 } from 'native-base'
 import React, { useEffect, useState } from 'react'
+import { useMutation } from 'react-query'
 import { useRecoilState } from 'recoil'
 
-import { useMutation } from 'react-query'
 import { updateUser } from '../api/user'
 import BottomNavigationBar from '../components/BottomNavigationBar'
 import Error from '../components/Error'
@@ -29,7 +29,7 @@ import { userLoggedState } from '../providers/user-state'
 import { uploadImage } from '../utilities/uploadImage'
 import { editInfoSchema } from '../validations/edit-info-validations'
 
-export default function EditInfoScreen({ navigation, route }) {
+export default function EditInfoScreen({ navigation }) {
   const [userLogged] = useRecoilState(userLoggedState)
   const [editInfoData, setEditInfoData] = useRecoilState(editInfoState)
   const [errors, setErrors] = useRecoilState(errorsEditInfoState)

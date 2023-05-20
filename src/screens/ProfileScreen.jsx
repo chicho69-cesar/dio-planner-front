@@ -9,7 +9,7 @@ import EventList from '../components/profile/EventList'
 import LoadingEvents from '../components/profile/LoadingEvents'
 import { userLoggedState } from '../providers/user-state'
 
-export default function ProfileScreen({ navigation, route }) {
+export default function ProfileScreen() {
   const [userLogged] = useRecoilState(userLoggedState)
 
   const [userId] = useState(userLogged.ID)

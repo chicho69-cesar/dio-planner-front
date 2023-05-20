@@ -16,7 +16,7 @@ import ButtonAction from '../components/ButtonAction'
 import ColumnMemories from '../components/memories/ColumnMemories'
 import { selectedEventState } from '../providers/event-state'
 
-export default function MemoriesScreen({ navigation, route }) {
+export default function MemoriesScreen({ navigation }) {
   const [selectedEvent] = useRecoilState(selectedEventState)
 
   const [memories, setMemories] = useState([])

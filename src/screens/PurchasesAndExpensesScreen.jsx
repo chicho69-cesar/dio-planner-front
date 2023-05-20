@@ -19,7 +19,7 @@ import Budget from '../components/Budget'
 import Purchase from '../components/purchase/Purchase'
 import { selectedEventState } from '../providers/event-state'
 
-export default function PurchasesAndExpensesScreen({ navigation, route }) {
+export default function PurchasesAndExpensesScreen() {
   const [selectedEvent] = useRecoilState(selectedEventState)
 
   const [isLoading, setIsLoading] = useState(true)

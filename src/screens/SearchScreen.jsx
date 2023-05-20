@@ -1,14 +1,14 @@
 import { Heading, Stack } from 'native-base'
 import React, { useEffect, useState } from 'react'
-
 import { useRecoilState } from 'recoil'
+
 import { getEventsByQuery } from '../api/event'
 import BottomNavigationBar from '../components/BottomNavigationBar'
 import LoadingResults from '../components/search/LoadingResults'
 import SearchResultsList from '../components/search/SearchResultsList'
 import { doSearchState, searchState } from '../providers/search-state'
 
-export default function SearchScreen({ navigation, route }) {
+export default function SearchScreen() {
   const [textSearch] = useRecoilState(searchState)
   const [doSearch, setDoSearch] = useRecoilState(doSearchState)
 

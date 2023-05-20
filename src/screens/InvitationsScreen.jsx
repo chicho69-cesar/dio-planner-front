@@ -8,7 +8,7 @@ import Invitation from '../components/invitations/Invitation'
 import LoadingInvitations from '../components/invitations/LoadingInvitations'
 import { userLoggedState } from '../providers/user-state'
 
-export default function InvitationsScreen({ navigation, route }) {
+export default function InvitationsScreen() {
   const [userLogged] = useRecoilState(userLoggedState)
 
   const [userId] = useState(userLogged.ID)

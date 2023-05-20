@@ -1,3 +1,4 @@
+import { MaterialIcons } from '@expo/vector-icons'
 import {
   Button,
   FormControl,
@@ -14,7 +15,6 @@ import React, { useEffect, useState } from 'react'
 import { useMutation } from 'react-query'
 import { useRecoilState } from 'recoil'
 
-import { MaterialIcons } from '@expo/vector-icons'
 import { addGrade, getGrades } from '../api/grade'
 import BottomNavigationBar from '../components/BottomNavigationBar'
 import CustomDivider from '../components/CustomDivider'
@@ -23,7 +23,7 @@ import Opinion from '../components/Opinion'
 import { selectedEventState } from '../providers/event-state'
 import { userLoggedState } from '../providers/user-state'
 
-export default function EventGradeScreen({ navigation, route }) {
+export default function EventGradeScreen() {
   const [userLogged] = useRecoilState(userLoggedState)
   const [selectedEvent] = useRecoilState(selectedEventState)
 

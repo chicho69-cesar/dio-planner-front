@@ -8,7 +8,7 @@ import GuestsList from '../components/guests/GuestsList'
 import GuestsLoading from '../components/guests/GuestsLoading'
 import { selectedEventState } from '../providers/event-state'
 
-export default function GuestsScreen({ navigation, route }) {
+export default function GuestsScreen() {
   const [selectedEvent] = useRecoilState(selectedEventState)
 
   const [eventGuests, setEventGuests] = useState([])

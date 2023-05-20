@@ -11,6 +11,7 @@ import {
 } from 'native-base'
 import React from 'react'
 import { useRecoilState } from 'recoil'
+
 import BottomNavigationBar from '../components/BottomNavigationBar'
 import Countdown from '../components/Countdown'
 import { selectedEventState } from '../providers/event-state'
@@ -53,7 +54,7 @@ const cards = [
   }
 ]
 
-export default function EventScreen({ navigation, route }) {
+export default function EventScreen({ navigation }) {
   const [selectedEvent] = useRecoilState(selectedEventState)
 
   return (

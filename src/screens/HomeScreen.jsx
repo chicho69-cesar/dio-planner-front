@@ -10,7 +10,7 @@ import LoadingEvents from '../components/home/LoadingEvents'
 import { useAuth } from '../hooks/useAuth'
 import { userLoggedState } from '../providers/user-state'
 
-export default function HomeScreen({ navigation, route }) {
+export default function HomeScreen() {
   const { user } = useAuth()
   const [userLogged] = useRecoilState(userLoggedState)
 

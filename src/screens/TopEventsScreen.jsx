@@ -7,7 +7,7 @@ import { FABCreate } from '../components/FABCreate'
 import EventList from '../components/home/EventList'
 import LoadingEvents from '../components/home/LoadingEvents'
 
-export default function TopEventsScreen({ navigation, route }) {
+export default function TopEventsScreen() {
   const [events, setEvents] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
