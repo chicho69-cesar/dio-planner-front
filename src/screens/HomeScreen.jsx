@@ -7,14 +7,12 @@ import BottomNavigationBar from '../components/BottomNavigationBar'
 import { FABCreate } from '../components/FABCreate'
 import EventList from '../components/home/EventList'
 import LoadingEvents from '../components/home/LoadingEvents'
-import { useAuth } from '../hooks/useAuth'
 import { userLoggedState } from '../providers/user-state'
 
 export default function HomeScreen() {
-  const { user } = useAuth()
   const [userLogged] = useRecoilState(userLoggedState)
 
-  const [userId] = useState(user.ID ?? userLogged.ID)
+  const [userId] = useState(userLogged.ID)
   const [events, setEvents] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
