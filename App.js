@@ -1,39 +1,20 @@
-import * as SecureStore from 'expo-secure-store'
-import { StatusBar } from 'expo-status-bar'
-import React, { useEffect, useState } from 'react'
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { RecoilRoot } from 'recoil'
-
-import Main from './src/Main'
-import { AuthContext, LoadingContext } from './src/context/context'
-
-const queryClient = new QueryClient()
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    async function getUser() {
-      const userSaved = await SecureStore.getItemAsync('user')
-      if (userSaved) {
-        setUser(JSON.parse(userSaved))
-      }
-    }
-
-    getUser()
-  }, [])
-
   return (
-    <RecoilRoot>
-      <LoadingContext.Provider value={{ loading, setLoading }}>
-        <AuthContext.Provider value={{ user, setUser }}>
-          <QueryClientProvider client={queryClient}>
-            <StatusBar style="light" />
-            <Main />
-          </QueryClientProvider>
-        </AuthContext.Provider>
-      </LoadingContext.Provider>
-    </RecoilRoot>
-  )
+    <View style={styles.container}>
+      <Text>Open up App.js to start working on your app!</Text>
+      <StatusBar style="auto" />
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
