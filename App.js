@@ -1,20 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import * as SecureStore from 'expo-secure-store'
+import { StatusBar } from 'expo-status-bar'
+import { useEffect, useState } from 'react'
+
+import { AuthContext, LoadingContext } from './src/context/context'
+import Router from './src/router'
+
+const queryClient = new QueryClient()
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(false)
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  useEffect(() => {
+    async function getUser() {
+      const userSaved = await SecureStore.getItemAsync('user')
+      if (userSaved) {
+        setUser(JSON.parse(userSaved))
+      }
+    }
+
+    getUser()
+  }, [])
+
+  return (
+    <LoadingContext.Provider value={{ loading, setLoading }}>
+      <AuthContext.Provider value={{ user, setUser }}>
+        <QueryClientProvider client={queryClient}>
+          <StatusBar style='light' />
+          <Router />
+        </QueryClientProvider>
+      </AuthContext.Provider>
+    </LoadingContext.Provider>
+  )
+}
